@@ -1,5 +1,3 @@
-
-
 .header {
     text-align: center;
     font-size: 40px;
@@ -11,8 +9,9 @@
     max-width: 800px;
     margin: 0 auto;
     padding: 30px;
-    background-color: lightgreen;
+    background-color: rgb(242, 224, 196);
     border-radius: 25px;
+    text-align: center;
 }
 
 .button {
@@ -22,13 +21,11 @@
     border-radius: 10px;
     cursor: pointer;
     align-items: right;
-    margin-bottom: 25px;
-    margin-left: 25px;
+    margin: 5px;
 }
 
 .inputField {
-    margin-bottom: 25px;
-    margin-left: 10px;
+    margin: 5px;
 }
 
 .labelText {
