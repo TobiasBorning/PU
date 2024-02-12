@@ -1,0 +1,31 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    text-align: center;
+    background-color: rgb(37, 34, 34);
+    color: white;
+}
+
+.scrolling-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+}
+
+.box {
+    margin: 5px;
+    padding: 12.5px;
+    border-radius: 10px;
+    background-color: rgb(180, 176, 176);
+    width: 203px;
+    height: 140px;
+    color: black;
+    cursor: pointer;
+
+    white-space: normal;
+    flex: 0 0 auto;
+}
