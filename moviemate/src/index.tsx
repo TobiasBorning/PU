@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import Login from './components/Login';
-import SignUp from './components/SignUp';
+import Login from './components/Login/Login';
+import SignUp from './components/SignUp/SignUp';
 
 import {
   createBrowserRouter,
