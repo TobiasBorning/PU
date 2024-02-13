@@ -1,15 +1,22 @@
 import './App.css';
-import BasicComponent from './components/basicComponent';
-import ScrollingComponent from './components/scrollingPage';
-import TextLayout from './components/textLayout';
+import { useNavigate } from 'react-router-dom';
 
 function App() {
+  const navigate = useNavigate();
+
+  const sendTo = (link: string) => {
+    navigate(link);
+  }
 
   return (
-    <div className="App">
-      <TextLayout /> 
-      <BasicComponent /> 
-      <ScrollingComponent />
+    <div className="container">
+      <h1>Moviemate</h1>
+      <br />
+      <div>
+        <button onClick={() => sendTo('/ScrollingComponent')}>
+          View scrolling page
+        </button>
+      </div>
     </div>
   );
 }

@@ -1,27 +1,29 @@
 html,
 body {
     margin: 0;
-    padding: 0;
+    padding-left: 0;
+    padding-right: 0;
+    background-color: white;
 }
 
-.container {
+.scrollingPageContainer {
     text-align: center;
     background-color: rgb(37, 34, 34);
     color: white;
 }
 
-.scrolling-container {
+.scrollingContainer {
     display: flex;
     flex-wrap: wrap;
-    padding: 5px;
+    justify-content: center;
 }
 
 .box {
-    margin: 5px;
+    margin: 7px;
     padding: 12.5px;
     border-radius: 10px;
     background-color: rgb(180, 176, 176);
-    width: 203px;
+    width: 238px;
     height: 140px;
     color: black;
     cursor: pointer;
