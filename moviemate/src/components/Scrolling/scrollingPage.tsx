@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ScrollingComponent.css';
+import { auth } from '../../config/firebase';
+import { getUser, User } from '../../utils/login/users';
 
 const ScrollingPage = () => {
+    const [user, setUser] = useState<string>('');
     const navigate = useNavigate();
-
+    const getName = async () => {
+        const user = auth.currentUser;
+        if (user) {
+            await getUser(user.uid).then((user: User) => {
+                setUser(', ' + user.firstname);
+            });       
+        }
+    }
     const goToMovie = (number: number) => {
         navigate('/movie', { state: { number } });
     }
@@ -14,12 +24,16 @@ const ScrollingPage = () => {
             {`Film ${number}`}
         </div>
     ));
+
+    useEffect(() => {
+        getName();
+    });
     
     return (
         <div className="scrollingPageContainer">
             <br></br>
             <button onClick={() => {navigate('/')}}>{'< Back'}</button>
-            <h1>Her kan du scrolle gjennom filmer</h1>
+            <h1>Hey{user}</h1>
             <div className="scrollingContainer">
                 {boxes}
             </div>
