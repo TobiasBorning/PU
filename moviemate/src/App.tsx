@@ -4,19 +4,15 @@ import { useNavigate } from 'react-router-dom'; //*
 function App() {
   const navigate = useNavigate();
 
-  const sendTo = (link: string) => {
-    navigate(link);
-  }
-
-  return (
+  return (  
     <div className="container">
       <h1>Moviemate</h1>
       <br />
       <div>
-        <button onClick={() => sendTo('/login')}>
+        <button onClick={() => navigate('/login')}>
           Log in
         </button>
-        <button onClick={() => sendTo('/signup')}>
+        <button onClick={() => navigate('/signup')}>
           Sign up
         </button>
       </div>
