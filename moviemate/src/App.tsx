@@ -13,12 +13,15 @@ function App() {
       <h1>Moviemate</h1>
       <br />
       <div>
-      <button onClick={() => sendTo('/login')}>
-        Log in
-      </button>
-      <button onClick={() => sendTo('/signup')}>
-        Sign up
-      </button>
+        <button onClick={() => sendTo('/login')}>
+          Log in
+        </button>
+        <button onClick={() => sendTo('/signup')}>
+          Sign up
+        </button>
+        <button onClick={() => sendTo('/ScrollingComponent')}>
+          View scrolling page
+        </button>
       </div>
     </div>
   );
