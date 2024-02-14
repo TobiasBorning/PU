@@ -19,9 +19,6 @@ function App() {
         <button onClick={() => sendTo('/signup')}>
           Sign up
         </button>
-        <button onClick={() => sendTo('/ScrollingComponent')}>
-          View scrolling page
-        </button>
       </div>
     </div>
   );

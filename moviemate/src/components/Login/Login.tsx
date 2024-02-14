@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Login.css';
-import { handleLogin } from '../../utils/users/login';
+import { handleLogin } from '../../utils/login/login';
 import { auth } from '../../config/firebase';
 import { useNavigate } from 'react-router-dom'; //*
 

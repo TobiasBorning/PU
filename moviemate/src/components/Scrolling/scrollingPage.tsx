@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ScrollingComponent.css';
 
-function ScrollingComponent() {
+const ScrollingPage = () => {
     const navigate = useNavigate();
 
     const goToMovie = (number: number) => {
@@ -14,10 +14,11 @@ function ScrollingComponent() {
             {`Film ${number}`}
         </div>
     ));
-
+    
     return (
         <div className="scrollingPageContainer">
             <br></br>
+            <button onClick={() => {navigate('/')}}>{'< Back'}</button>
             <h1>Her kan du scrolle gjennom filmer</h1>
             <div className="scrollingContainer">
                 {boxes}
@@ -26,4 +27,4 @@ function ScrollingComponent() {
     );
 }
 
-export default ScrollingComponent;
+export default ScrollingPage;
