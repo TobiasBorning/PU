@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './SignUp.css';
-import { handleCreateUser } from '../../utils/login';
+import { handleCreateUser } from '../../utils/users/login';
 import { auth } from '../../config/firebase';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,6 +22,10 @@ const SignUp: React.FC = () => {
     }
   }
 
+  const navigateBack = () => { 
+    navigate('/');
+  }
+  
   return (
     <div className='container'>
       <p className='header'>Welcome to Moviemate</p>
@@ -33,14 +37,14 @@ const SignUp: React.FC = () => {
           type="text" 
           value={email} 
           placeholder="Email..."
-          onChange={e => setEmail(e.target.value)} 
+          onChange={e => setEmail(e.target.value.trim())} 
       />
       <input 
           className='inputField'
           type="password" 
           value={password} 
           placeholder="Password..."
-          onChange={e => setPassword(e.target.value)} 
+          onChange={e => setPassword(e.target.value.trim())} 
       />
       <br />
       <input 
@@ -48,20 +52,22 @@ const SignUp: React.FC = () => {
           type="text" 
           value={firstname} 
           placeholder="Firstname..."
-          onChange={e => setFirstname(e.target.value)}
+          onChange={e => setFirstname(e.target.value.trim())}
       />
       <input 
           className='inputField'
           type="text" 
           value={lastname} 
           placeholder="Lastname..."
-          onChange={e => setLastname(e.target.value)}
+          onChange={e => setLastname(e.target.value.trim())}
       />
       <br></br>
-      <button type='submit' onClick={createUser} className='button'>Sign Up</button>
+      <p>Password must be at least 6 characters long</p>
+      <br />
+      <button type='submit' onClick={createUser}>Sign Up</button>
+      <br></br>
+      <button onClick={navigateBack}>{'< Back'}</button>
     </div>
   );
 }
-
-
 export default SignUp;

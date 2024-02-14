@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Login.css';
-import { handleLogin } from '../../utils/login';
+import { handleLogin } from '../../utils/users/login';
 import { auth } from '../../config/firebase';
 import { useNavigate } from 'react-router-dom'; //*
 
@@ -21,6 +21,10 @@ import { useNavigate } from 'react-router-dom'; //*
       }
     }
 
+    const navigateBack = () => { 
+      navigate('/');
+    }
+
     return (
       <div className='container'>
         <p className='header'>Welcome to Moviemate</p>
@@ -31,17 +35,19 @@ import { useNavigate } from 'react-router-dom'; //*
           type="text" 
           value={email} 
           placeholder="Email..."
-          onChange={e => setEmail(e.target.value)} 
+          onChange={e => setEmail(e.target.value.trim())} 
         />
         <input 
           className='inputField'
           type="password" 
           value={password} 
           placeholder="Password..."
-          onChange={e => setPassword(e.target.value)} 
+          onChange={e => setPassword(e.target.value.trim())} 
         />
         <br></br>
-        <button type='submit' onClick={logUserIn} className='button'>Log in</button>
+        <button type='submit' onClick={logUserIn}>Log in</button>
+        <br></br>
+        <button onClick={navigateBack}>{'< Back'}</button>
       </div>
     );
 }
