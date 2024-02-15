@@ -1,14 +1,22 @@
 import './App.css';
-import BasicComponent from './components/basicComponent';
-import TextLayout from './components/textLayout';
-import { testFetchJson } from './utils/movieUtils/fetchAndFillDb';
+import { useNavigate } from 'react-router-dom';
+
 function App() {
+  const navigate = useNavigate();
+
+  const sendTo = (link: string) => {
+    navigate(link);
+  }
 
   return (
-    <div className="App">
-      <button onClick={testFetchJson}>Click</button>
-      <TextLayout  />
-      <BasicComponent />
+    <div className="container">
+      <h1>Moviemate</h1>
+      <br />
+      <div>
+        <button onClick={() => sendTo('/ScrollingComponent')}>
+          View scrolling page
+        </button>
+      </div>
     </div>
   );
 }
