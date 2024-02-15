@@ -1,5 +1,6 @@
 import { db } from '../../config/firebase';
-import { addDoc, collection, doc, setDoc, getDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc } from 'firebase/firestore';
+import data from './db.json';
 
 interface Movie {
     id: string;
@@ -11,7 +12,12 @@ interface Movie {
     director: string;
 }
 
-const fillDbWithMovies = async (movies: Movie[]) => {
+export const testFetchJson = () => {
+    console.log(data);
+}
+
+
+export const fillDbWithMovies = async (movies: Movie[]) => {
     const collectionRef = collection(db, 'movies');
     movies.forEach(async (movie) => {
         const data = {
