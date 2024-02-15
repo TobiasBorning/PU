@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import Movie from './components/Movie/ShowMove';
-import ScrollingComponent from './components/Scrolling/scrollingPage';
+import Movie from './components/Movie/ShowMovie';
+import ScrollingComponent from './components/Scrolling/ScrollingComponent';
 import {
   createBrowserRouter,
   RouterProvider,

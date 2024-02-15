@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ScrollingComponent.css';
-import { getMovie, Movie } from '../../utils/movieUtils/fetchAndFillDb';
+import { getMovies, Movie } from '../../utils/movieUtils/fetchAndFillDb';
 
 function ScrollingComponent() {
     const navigate = useNavigate();
@@ -9,16 +9,9 @@ function ScrollingComponent() {
 
     useEffect(() => {
         const fillMovieList = async () => {
-            const movies: Movie[] = [];
-            for (let i = 1; i < 15; i++) {
-                try {
-                    const movie = await getMovie(i.toString());
-                    movies.push(movie);
-                } catch (error) {
-                    console.error(`Error fetching movie ${i}:`, error);
-                }
-            }
-            setMovieList(movies);
+            getMovies().then((movies) => {
+                setMovieList(movies);
+            });
         };
         
         fillMovieList();

@@ -1,5 +1,5 @@
 import { db } from '../../config/firebase';
-import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, setDoc, getDocs } from 'firebase/firestore';
 import data from './db.json';
 
 export interface Movie {
@@ -100,4 +100,24 @@ export const getMovie = async (id: string) : Promise<Movie> =>  {
             throw new Error('No such document!');
         }
     });
+}
+
+export const getMovies = async () : Promise<Movie[]> => {
+    const movies: Movie[] = [];
+    const querySnapshot = await getDocs(collection(db, 'movies'));
+    querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const movie: Movie = {
+            id: doc.id,
+            title: data.title,
+            year: data.year,
+            actors: data.actors,
+            genres: data.genres,
+            posterUrl: data.posterUrl,
+            director: data.director,
+            plot: data.plot
+        }
+        movies.push(movie);
+    });
+    return movies;
 }

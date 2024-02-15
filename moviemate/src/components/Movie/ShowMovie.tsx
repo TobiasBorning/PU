@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './Movie.css';
-import { get } from 'http';
 import { getMovie, Movie } from '../../utils/movieUtils/fetchAndFillDb';
 
 
