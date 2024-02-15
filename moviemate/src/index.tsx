@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
-import ScrollingPage from './components/Scrolling/ScrollingPages';
+import ScrollingPage from './components/Scrolling/ScrollingPage';
 
 import {
   createBrowserRouter,
