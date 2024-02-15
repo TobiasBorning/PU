@@ -2,7 +2,7 @@ import { db } from '../../config/firebase';
 import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import data from './db.json';
 
-interface Movie {
+export interface Movie {
     id?: string;
     title?: string;
     year?: number;

@@ -1,46 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ScrollingComponent.css';
-
-interface Movie {
-    id?: number;
-    title?: string;
-    year?: string;
-    runtime?: string;
-    actors?: string[];
-    generes?: string[];
-    posterUrl?: string;
-    director?: string;
-    plot?: string;
-}
-
-
-const testMovie: Movie = {
-    id: 1,
-    title: "Beetlejuice",
-    year: "1988",
-    runtime: "92",
-    generes: ["Comedy", "Fantasy"],
-    actors: ["Alec Baldwin, Geena Davis, Annie McEnroe, Maurice Page"],
-    director: "Tim Burton",
-    posterUrl: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTU5ODAyNzA4OV5BMl5BanBnXkFtZTcwNzYwNTIzNA@@._V1_SX300.jpg",
-    plot: "A couple of recently deceased ghosts contract the services of a \"bio-exorcist\" in order to remove the obnoxious new owners of their house."
-}
-
+import { getMovie, Movie } from '../../utils/movieUtils/fetchAndFillDb';
 
 function ScrollingComponent() {
     const navigate = useNavigate();
+    const [movieList, setMovieList] = useState<Movie[]>([]);
+
+    useEffect(() => {
+        const fillMovieList = async () => {
+            const movies: Movie[] = [];
+            for (let i = 1; i < 15; i++) {
+                try {
+                    const movie = await getMovie(i.toString());
+                    movies.push(movie);
+                } catch (error) {
+                    console.error(`Error fetching movie ${i}:`, error);
+                }
+            }
+            setMovieList(movies);
+        };
+        
+        fillMovieList();
+    }, []);
 
     const goToMovie = (number: number) => {
         navigate('/movie', { state: { number } });
     }
-
-    const boxes = Array.from({ length: 100 }, (_, i) => i + 1).map((number) => (
-        <div key={number} className="box" onClick={() => goToMovie(number)}>
-            <h3>{`${testMovie.title}`}</h3>
-            <img src={testMovie.posterUrl}/>
+    
+    const boxes = movieList.map((movie) => (
+        <div key={movie.id} className="box" onClick={() => {
+            if (movie.id !== undefined) { 
+                goToMovie(parseInt(movie.id));
+            } else {
+                console.error("Movie ID is undefined");
+            }
+        }}> 
+            <h3>{`${movie.title}`}</h3>
+            <img src={movie.posterUrl} alt="" />
         </div>
     ));
+    
 
     return (
         <div className="scrollingPageContainer">
