@@ -1,34 +1,82 @@
 import { db } from '../../config/firebase';
-import { addDoc, collection, doc, getDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import data from './db.json';
 
 interface Movie {
-    id: string;
-    title: string;
-    year: number;
-    actors: string[];
-    generes: string[];
-    posterUrl: string;
-    director: string;
+    id?: string;
+    title?: string;
+    year?: number;
+    actors?: string[];
+    genres?: string[];
+    posterUrl?: string;
+    director?: string[];
+    plot?: string;
 }
 
 export const testFetchJson = () => {
-    console.log(data);
+    console.log(data.movies);
 }
 
-
-export const fillDbWithMovies = async (movies: Movie[]) => {
-    const collectionRef = collection(db, 'movies');
-    movies.forEach(async (movie) => {
-        const data = {
+export const convertToMovies = () => {
+    const movies: Movie[] = [];
+    data.movies.forEach((movie: any) => {
+        const newMovie: Movie = {
+            id: parseId(movie.id),
             title: movie.title,
-            year: movie.year,
-            actors: movie.actors,
-            generes: movie.generes,
+            year: parseYear(movie.year),
+            actors: parseActors(movie.actors),
+            genres: parseGenres(movie.genres),
             posterUrl: movie.posterUrl,
-            director: movie.director
+            director: parseDirector(movie.director),
+            plot: movie.plot
         }
-        await addDoc(collectionRef, data);
+        console.log(newMovie);
+        movies.push(newMovie);
+    });
+    //fillDbWithMovies(movies);
+    console.log(movies);
+}
+
+const parseActors = (actors: string) : string[] => {
+    return actors.split(', ');
+}
+const parseDirector = (director: string) : string[] => {
+    return director.split(', ');
+}
+const parseGenres = (genres: any) => {
+    const output : string[] = []
+    genres.forEach((genre: string) => {
+        output.push(genre);
+    });
+    return output;
+}
+
+const parseYear = (year: string) : number => {
+    return parseInt(year);
+}
+const parseId = (id: number) : string => {
+    return id.toString();
+}
+
+const fillDbWithMovies = async (movies: Movie[]) => {
+    movies.forEach(async (movie) => {
+        if (movie.id != null) {
+            try {
+               const movieDoc = doc(db, 'movies', movie.id)
+                await setDoc(movieDoc, {
+                    title: movie.title,
+                    year: movie.year,
+                    actors: movie.actors,
+                    genres: movie.genres,
+                    posterUrl: movie.posterUrl,
+                    director: movie.director,
+                    plot: movie.plot
+                }); 
+            }
+            catch (e) {
+                console.error('Error adding document: ', e);
+            }
+        }
     });
 }
 
@@ -42,7 +90,7 @@ export const getMovie = async (id: string) : Promise<Movie> =>  {
                 title: data.title,
                 year: data.year,
                 actors: data.actors,
-                generes: data.generes,
+                genres: data.genres,
                 posterUrl: data.posterUrl,
                 director: data.director
             }
