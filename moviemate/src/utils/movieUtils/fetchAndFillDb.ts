@@ -92,7 +92,8 @@ export const getMovie = async (id: string) : Promise<Movie> =>  {
                 actors: data.actors,
                 genres: data.genres,
                 posterUrl: data.posterUrl,
-                director: data.director
+                director: data.director,
+                plot: data.plot
             }
             return movie;
         } else {
