@@ -37,7 +37,7 @@ function ShowMovie() {
                 Plot: {movie.plot}<br></br><br></br><br></br>
                 <img src={movie.posterUrl} alt=''/>
             </p>
-            <button onClick={() => navigate('/ScrollingComponent')}>Go back</button>
+            <button onClick={() => navigate('/main')}>Go back</button>
         </div>
     );
 }

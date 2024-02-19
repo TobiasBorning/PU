@@ -3,15 +3,13 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
-import ScrollingPage from './components/Scrolling/ScrollingPage';
-
-import Movie from './components/Movie/ShowMovie';
+import ShowMovie from './components/Movie/ShowMovie';
 import ScrollingComponent from './components/Scrolling/ScrollingComponent';
+
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Movie from './components/Movie/movie';
 
 const router = createBrowserRouter([
   {
@@ -28,11 +26,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/main",
-    element: <ScrollingPage/>,
+    element: <ScrollingComponent/>,
   },
   {
     path: "/movie",
-    element: <Movie/>,
+    element: <ShowMovie/>,
   }
 ]);
 
