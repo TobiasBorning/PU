@@ -24,7 +24,7 @@ const SignUp: React.FC = () => {
     const login = await handleCreateUser(auth, email, password, firstname, lastname);
     if (login === 'Success!') {
       setResponse('Success! Redirecting to login page...');
-      navigate('main');
+      navigate('/main');
     }
     else {
       setResponse(login);
