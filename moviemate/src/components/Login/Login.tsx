@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Login.css';
 import { handleLogin } from '../../utils/login/login';
-import { auth } from '../../config/firebase';
+import { auth, db} from '../../config/firebase';
 import { useNavigate } from 'react-router-dom'; //*
 
 
@@ -11,13 +11,28 @@ import { useNavigate } from 'react-router-dom'; //*
     const [sucess, setSucess] = useState<string>('');
     const navigate = useNavigate(); //*
 
+    function isEmpty(input: string): boolean{
+      return input.trim() === '';
+    }
+
     const logUserIn = async () => {
-      if (await handleLogin(auth, email, password)) {
-        setSucess('Logged user in');
-        navigate('/main'); //*
+      try{
+        if (isEmpty(password) || isEmpty(email)){
+          throw new Error('Cannot leave an input empty.')
+        }
+
+        const login = await handleLogin(auth, email, password);
+        if (login === 'Success!') {
+          setSucess('Logged user in');
+          navigate('/main'); //*
+        } else {
+          setSucess(login); 
+        }
       }
-      else {
-        setSucess('Error loggin in');
+      catch (error : any) {
+        console.error("User does not exist.", error.message);
+        setSucess(error.message);
+
       }
     }
 

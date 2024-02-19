@@ -12,16 +12,25 @@ const SignUp: React.FC = () => {
   const [response, setResponse] = useState<string>('');
   const navigate = useNavigate();
 
+  function isEmpty(input: string): boolean{
+    return input.trim() === '';
+  }
   const createUser = async () => {
-    if (await handleCreateUser(auth, email, password, firstname, lastname)) {
-      setResponse('Signed in');
-      navigate('/main');
+    if (isEmpty(email) || isEmpty(password) || isEmpty(firstname) || isEmpty(lastname)) {
+      setResponse('Please fill in all fields');
+      return;
+    }
+
+    const login = await handleCreateUser(auth, email, password, firstname, lastname);
+    if (login === 'Success!') {
+      setResponse('Success! Redirecting to login page...');
+      navigate('main');
     }
     else {
-      setResponse('Error signin up');
+      setResponse(login);
     }
-  }
-
+  };
+  
   const navigateBack = () => { 
     navigate('/');
   }
