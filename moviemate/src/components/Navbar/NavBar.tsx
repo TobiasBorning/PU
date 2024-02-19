@@ -1,13 +1,15 @@
 import React from "react";
+import './NavBar.css';
 
 export const NavBar: React.FC = () => {
     return (
-        <nav>
-        <h1>Moviemate</h1>
-        <div>
-            <button>Log in</button>
-            <button>Sign up</button>
-        </div>
+        <nav className="nav">
+        <a className="site-title" href="/ScrollingPage">MovieMate</a>
+        <ul>
+            <a>My movies</a>
+            <a>Filter</a>
+            <a>Search</a>
+        </ul>
         </nav>
     );
-    }
+}

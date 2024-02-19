@@ -5,7 +5,9 @@ html, body {
 }
 
 .moviecontainer {
-    text-align: center;
+    margin-top: 20px;
+    padding: 30px;
+    text-align: left;
     background-color: rgb(123, 76, 123);
     color: white;
     width: 500px;
@@ -14,5 +16,10 @@ html, body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    border-radius: 10px;
+}
+.moviecontainer img {
+    width: 300px;
+    height: 100%;
     border-radius: 10px;
 }

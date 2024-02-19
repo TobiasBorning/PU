@@ -1,5 +1,5 @@
 import { db } from '../../config/firebase';
-import { addDoc, collection, doc, getDoc, setDoc, getDocs } from 'firebase/firestore';
+import { collection, doc, getDoc, setDoc, getDocs } from 'firebase/firestore';
 import data from './db.json';
 
 export interface Movie {

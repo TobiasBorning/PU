@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ScrollingComponent.css';
 import { getMovies, Movie } from '../../utils/movieUtils/fetchAndFillDb';
+import { NavBar } from '../Navbar/NavBar';
 
 function ScrollingComponent() {
     const navigate = useNavigate();
@@ -37,6 +38,7 @@ function ScrollingComponent() {
 
     return (
         <div className="scrollingPageContainer">
+            <NavBar />
             <br></br>
             <h1>Her kan du scrolle gjennom filmer</h1>
             <div className="scrollingContainer">
