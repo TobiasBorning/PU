@@ -12,16 +12,33 @@ const SignUp: React.FC = () => {
   const [response, setResponse] = useState<string>('');
   const navigate = useNavigate();
 
+  function isEmpty(input: string): boolean{
+    return input.trim() === '';
+  }
   const createUser = async () => {
-    if (await handleCreateUser(auth, email, password, firstname, lastname)) {
+
+    try {
+      if (!email.includes('@')){
+        throw new Error('The email needs to conatin @.')
+      }
+      if (password.length <= 5){
+        throw new Error('The password needs to be longer than 5 chars.')
+      }
+      if (isEmpty(email) || isEmpty(password) || isEmpty(firstname) || isEmpty(lastname)){
+        throw new Error('Cannot leave an input empty.')
+      }
+      
+    
+    await handleCreateUser(auth, email, password, firstname, lastname);
       setResponse('Signed in');
       navigate('/main');
-    }
-    else {
-      setResponse('Error signin up');
-    }
   }
-
+    catch (error: any){
+      console.error('Gal input ved innlogging', error.message);
+      setResponse(error.message);
+    }
+  };
+  
   const navigateBack = () => { 
     navigate('/');
   }

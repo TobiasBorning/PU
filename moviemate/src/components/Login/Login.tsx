@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import './Login.css';
 import { handleLogin } from '../../utils/users/login';
-import { auth } from '../../config/firebase';
+import { auth, db} from '../../config/firebase';
 import { useNavigate } from 'react-router-dom'; //*
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 
 
  const Login: React.FC = () => {
@@ -11,13 +13,38 @@ import { useNavigate } from 'react-router-dom'; //*
     const [sucess, setSucess] = useState<string>('');
     const navigate = useNavigate(); //*
 
+    function isEmpty(input: string): boolean{
+      return input.trim() === '';
+    }
+
     const logUserIn = async () => {
-      if (await handleLogin(auth, email, password)) {
+      try{
+
+        const userInDB = await signInWithEmailAndPassword(auth, email, password);
+        const user = userInDB.user;
+        const userExist = doc(db, 'users', user?.uid)
+        const userExistInDb = await getDoc(userExist)
+
+        if(!userExistInDb.exists()){
+          throw new Error("User does not exist")
+        }
+        if (password.length <= 5){
+          throw new Error("The password needs to be longer than 5 chars.")
+        }
+
+        if (isEmpty(password) || isEmpty(email)){
+          throw new Error('Cannot leave an input empty.')
+        }
+
+
+        await handleLogin(auth, email, password); 
         setSucess('Logged user in');
         navigate('/main'); //*
       }
-      else {
-        setSucess('Error loggin in');
+      catch (error : any) {
+        console.error("User does not exist.", error.message);
+        setSucess(error.message);
+
       }
     }
 
