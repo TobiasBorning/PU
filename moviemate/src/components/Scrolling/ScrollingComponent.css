@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding-left: 0;
     padding-right: 0;
-    background-color: white;
+    background-color: rgb(37, 34, 34);
 }
 
 .scrollingPageContainer {
@@ -19,15 +19,23 @@ body {
 }
 
 .box {
-    margin: 7px;
+    margin: 20px;
     padding: 12.5px;
     border-radius: 10px;
-    background-color: rgb(180, 176, 176);
+    background-color: rgb(123, 76, 123);
     width: 238px;
-    height: 140px;
-    color: black;
+    height: 430px;
+    color: white;
     cursor: pointer;
-
     white-space: normal;
     flex: 0 0 auto;
+}
+
+.box img {
+    max-width: 100%; 
+    max-height: 100%; 
+    height: auto;     
+    display: block;   
+    margin: auto;     
+    object-fit: cover; 
 }

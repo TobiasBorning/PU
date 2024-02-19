@@ -5,6 +5,8 @@ import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
 import ScrollingPage from './components/Scrolling/ScrollingPage';
 
+import Movie from './components/Movie/ShowMovie';
+import ScrollingComponent from './components/Scrolling/ScrollingComponent';
 import {
   createBrowserRouter,
   RouterProvider,
