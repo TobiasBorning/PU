@@ -16,26 +16,18 @@ const SignUp: React.FC = () => {
     return input.trim() === '';
   }
   const createUser = async () => {
+    if (isEmpty(email) || isEmpty(password) || isEmpty(firstname) || isEmpty(lastname)) {
+      setResponse('Please fill in all fields');
+      return;
+    }
 
-    try {
-      if (!email.includes('@')){
-        throw new Error('The email needs to conatin @.')
-      }
-      if (password.length <= 5){
-        throw new Error('The password needs to be longer than 5 chars.')
-      }
-      if (isEmpty(email) || isEmpty(password) || isEmpty(firstname) || isEmpty(lastname)){
-        throw new Error('Cannot leave an input empty.')
-      }
-      
-    
-    await handleCreateUser(auth, email, password, firstname, lastname);
-      setResponse('Signed in');
-      navigate('/main');
-  }
-    catch (error: any){
-      console.error('Gal input ved innlogging', error.message);
-      setResponse(error.message);
+    const login = await handleCreateUser(auth, email, password, firstname, lastname);
+    if (login === 'Success!') {
+      setResponse('Success! Redirecting to login page...');
+      navigate('main');
+    }
+    else {
+      setResponse(login);
     }
   };
   

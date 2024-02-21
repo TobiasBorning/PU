@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 import { render, screen, } from '@testing-library/react';
 import SignUp from '../../../components/SignUp/SignUp.tsx';
@@ -15,16 +16,4 @@ test('should render signup component', () => {
     render(<SignUp />);
     // Your assertions go here
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
+*/

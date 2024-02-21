@@ -1,8 +1,9 @@
 import { db } from '../../config/firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
 
-export const handleCreateUser = async (auth: any, email: string, password: string, firstname: string, lastname: string) => {
+export const handleCreateUser = async (auth: any, email: string, password: string, firstname: string, lastname: string) : Promise<string> => {
     try {
         await createUserWithEmailAndPassword(auth, email, password);
         const user = auth.currentUser;
@@ -14,19 +15,25 @@ export const handleCreateUser = async (auth: any, email: string, password: strin
                 lastname: lastname
             });
         }
-        return true;
+        return "Success!"
     } catch(err) {
-        return false;
+        if (err instanceof FirebaseError) {
+            return err.message.replace("-", " ");
+        }
+        return "An error occurred. Please try again.";
     }
     
 }
 
-export const handleLogin = async (auth:any, email: string, password: string) => {
+export const handleLogin = async (auth:any, email: string, password: string) : Promise<string> => {
     try {
         await signInWithEmailAndPassword(auth, email, password); 
-        return true;
+        return "Success!";
     } catch(err) {
-        return false;
+        if (err instanceof FirebaseError) {
+            return err.message.replace("-", " ");
+        }   
+        return "An error occurred. Please try again.";
     }
     
 }   

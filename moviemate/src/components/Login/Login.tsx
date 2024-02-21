@@ -19,27 +19,17 @@ import { doc, getDoc } from 'firebase/firestore';
 
     const logUserIn = async () => {
       try{
-
-        const userInDB = await signInWithEmailAndPassword(auth, email, password);
-        const user = userInDB.user;
-        const userExist = doc(db, 'users', user?.uid)
-        const userExistInDb = await getDoc(userExist)
-
-        if(!userExistInDb.exists()){
-          throw new Error("User does not exist")
-        }
-        if (password.length <= 5){
-          throw new Error("The password needs to be longer than 5 chars.")
-        }
-
         if (isEmpty(password) || isEmpty(email)){
           throw new Error('Cannot leave an input empty.')
         }
 
-
-        await handleLogin(auth, email, password); 
-        setSucess('Logged user in');
-        navigate('/main'); //*
+        const login = await handleLogin(auth, email, password);
+        if (login === 'Success!') {
+          setSucess('Logged user in');
+          navigate('/main'); //*
+        } else {
+          setSucess(login); 
+        }
       }
       catch (error : any) {
         console.error("User does not exist.", error.message);
