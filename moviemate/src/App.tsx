@@ -19,6 +19,9 @@ function App() {
       <button onClick={() => sendTo('/signup')}>
         Sign up
       </button>
+      <button onClick={() => sendTo('/Main')}>
+        Dashboard
+      </button>
       </div>
     </div>
   );
