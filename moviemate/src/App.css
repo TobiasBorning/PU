@@ -11,6 +11,7 @@ body {
   display: flex;
   justify-content: center;
   background-color: #202020;
+  color: #d8d8d8;
 }
 
 button {
@@ -27,7 +28,7 @@ button {
 
 .header {
   font-size: 40px;
-  color: #181818;
+  color: #e4b036;
 }
 
 .inputField {

@@ -60,9 +60,9 @@ import { useNavigate } from 'react-router-dom'; //*
           onChange={e => setPassword(e.target.value.trim())} 
         />
         <br></br>
-        <button type='submit' onClick={logUserIn}>Log in</button>
-        <br></br>
         <button onClick={navigateBack}>{'< Back'}</button>
+        <button type='submit' onClick={logUserIn}>{'Log in >'}</button>
+        
       </div>
     );
 }

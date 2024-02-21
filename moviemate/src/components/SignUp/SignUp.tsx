@@ -73,9 +73,8 @@ const SignUp: React.FC = () => {
       <br></br>
       <p>Password must be at least 6 characters long</p>
       <br />
-      <button type='submit' onClick={createUser}>Sign Up</button>
-      <br></br>
       <button onClick={navigateBack}>{'< Back'}</button>
+      <button type='submit' onClick={createUser}>{'Sign Up >'}</button>
     </div>
   );
 }
