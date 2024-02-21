@@ -42,7 +42,7 @@ import { useNavigate } from 'react-router-dom'; //*
 
     return (
       <div className='container'>
-        <p className='header'>Welcome to Moviemate</p>
+        <h1 className='header'>Moviemate</h1>
         <p>{sucess}</p>
         <br></br>
         <input 

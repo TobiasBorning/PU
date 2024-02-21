@@ -6,7 +6,7 @@ function App() {
 
   return (  
     <div className="container">
-      <h1>Moviemate</h1>
+      <h1 className='header'>Moviemate</h1>
       <br />
       <div>
         <button onClick={() => navigate('/login')}>

@@ -37,7 +37,7 @@ const SignUp: React.FC = () => {
   
   return (
     <div className='container'>
-      <p className='header'>Welcome to Moviemate</p>
+      <h1 className='header'>Moviemate</h1>
       <br></br>
       <p>{response}</p>
       <br></br>

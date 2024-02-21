@@ -49,10 +49,13 @@ function ScrollingComponent() {
     
 
     return (
-        <div className="scrollingPageContainer">
-            <NavBar />
-            <br></br>
-            <h1>Hey{user}</h1>
+        <div className='mainPageContainer'>
+            <br />
+            <div className='welcomeText'>
+                <h1>Hey{user}</h1>
+                <p>Welcome to Moviemate</p>
+            </div>
+            <br />
             <div className="scrollingContainer">
                 {boxes}
             </div>

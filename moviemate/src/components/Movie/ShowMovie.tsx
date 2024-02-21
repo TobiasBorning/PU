@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './Movie.css';
+import './ShowMovie.css';
 import { getMovie, Movie } from '../../utils/movieUtils/fetchAndFillDb';
 
 
@@ -28,16 +28,19 @@ function ShowMovie() {
     });
 
     return (
-        <div className='moviecontainer'>
-            <h1> {movie.title}</h1>
-            <p> Year: {movie.year}<br></br>
-                Genres: {movie.genres?.join(", ")}<br></br>
-                Actors: {movie.actors?.join(", ")}<br></br>
-                Director: {movie.director}<br></br>
-                Plot: {movie.plot}<br></br><br></br><br></br>
-                <img src={movie.posterUrl} alt=''/>
-            </p>
-            <button onClick={() => navigate('/main')}>Go back</button>
+        <div className='container'>
+            <div className='movieInfo'>
+                <h1> {movie.title}</h1>
+                <p>Year: {movie.year}</p>
+                <p>Genres: {movie.genres?.join(", ")}</p>
+                <p>Actors: {movie.actors?.join(", ")}</p>
+                <p>Director: {movie.director}</p>
+                <p>Plot: {movie.plot}</p>
+                <img src={movie.posterUrl} alt=''/>     
+                <br />
+                <button onClick={() => navigate('/main')}>Go back</button>                
+            </div> 
+            
         </div>
     );
 }

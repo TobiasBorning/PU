@@ -1,34 +1,48 @@
-html,
-body {
-    margin: 0;
-    padding-left: 0;
-    padding-right: 0;
-    background-color: rgb(37, 34, 34);
+.mainPageContainer {
+    padding-left: 180px;
+    padding-right: 180px;
 }
 
-.scrollingPageContainer {
-    text-align: center;
-    background-color: rgb(37, 34, 34);
-    color: white;
+.welcomeText {
+    margin-top: 50px;
+    text-align: left;
+    color: #e4b036;
 }
-
 .scrollingContainer {
+    text-align: center;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
 
+.scrollingContainer h3 {
+    max-width: 238px;
+    overflow: hidden;
+    white-space: nowrap; /* Prevent text from wrapping */
+    text-overflow: ellipsis;
+}
+
 .box {
-    margin: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
     padding: 12.5px;
     border-radius: 10px;
-    background-color: rgb(123, 76, 123);
+    background-color: #373737;
     width: 238px;
-    height: 430px;
-    color: white;
+    height: 480px;
+    color: #e4b036;
     cursor: pointer;
     white-space: normal;
     flex: 0 0 auto;
+}
+
+.box:hover {
+    background-color: #565656;
+    color: white;
+}
+
+.box:hover img {
+    filter: grayscale(0%);
 }
 
 .box img {
@@ -38,4 +52,8 @@ body {
     display: block;   
     margin: auto;     
     object-fit: cover; 
+    margin-left: -5px;
+    border: transparent 5px solid;
+    border-radius: 15px;
+    filter: sepia(80%);
 }
