@@ -1,0 +1,20 @@
+* {
+    box-sizing: border-box;
+}
+
+.nav {
+    background-color: #373737;
+    color: #e4b036;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav a {
+    text-decoration: none;
+    padding: 14px 16px;
+}
+
+.site-title {
+    color: #e4b036;
+    padding: 20px 20px;
+}

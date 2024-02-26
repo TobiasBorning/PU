@@ -1,6 +1,22 @@
+/*
+Main yellow: #e4b036
+Main grey: #373737
+Background grey: #202020
+Main black: #181818
+Main white: #d8d8d8
+*/
+body {
+  margin: 0 auto;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  justify-content: center;
+  background-color: #202020;
+  color: #d8d8d8;
+}
+
 button {
-  background-color: #6060bd;
-  color: #fff;
+  background-color: #e4b036;
+  color: #373737;
   padding: 10px 20px;
   border-radius: 10px;
   border-style: solid;
@@ -9,9 +25,30 @@ button {
   align-items: right;
   margin: 20px;
 }
-h1 {
-  font-family: Arial, Helvetica, sans-serif
+
+.header {
+  font-size: 40px;
+  color: #e4b036;
+}
+
+.inputField {
+  margin-bottom: 25px;
+  background-color: #373737;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #181818;
+  cursor: pointer;
+  align-items: right;
+  margin: 20px;
 }
 .container {
-  width: 400px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 50px;
+  border-radius: 25px;
+  text-align: center;
+  background-color: #565656;
+  width: 600px;
 }

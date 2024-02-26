@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
-
+import ShowMovie from './components/Movie/ShowMovie';
+import ScrollingComponent from './components/Scrolling/ScrollingComponent';
+import Main from './components/Main';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Main from './components/Main';
+
 
 
 const router = createBrowserRouter([
@@ -26,8 +28,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/Main",
-    element: <Main/>,
+    element: <ScrollingComponent/>,
   },
+  {
+    path: "/movie",
+    element: <ShowMovie/>,
+  }
 ]);
 
 const root = ReactDOM.createRoot(
@@ -38,4 +44,3 @@ root.render(
     <RouterProvider router = {router}/>
   </React.StrictMode>
 );
-

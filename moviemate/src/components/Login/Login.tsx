@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import './Login.css';
-import { handleLogin } from '../../utils/users/login';
-import { auth, db} from '../../config/firebase';
+import { handleLogin } from '../../utils/login/login';
+import { auth } from '../../config/firebase';
 import { useNavigate } from 'react-router-dom'; //*
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
 
 
  const Login: React.FC = () => {
@@ -44,7 +42,7 @@ import { doc, getDoc } from 'firebase/firestore';
 
     return (
       <div className='container'>
-        <p className='header'>Welcome to Moviemate</p>
+        <h1 className='header'>Moviemate</h1>
         <p>{sucess}</p>
         <br></br>
         <input 
@@ -62,9 +60,9 @@ import { doc, getDoc } from 'firebase/firestore';
           onChange={e => setPassword(e.target.value.trim())} 
         />
         <br></br>
-        <button type='submit' onClick={logUserIn}>Log in</button>
-        <br></br>
         <button onClick={navigateBack}>{'< Back'}</button>
+        <button type='submit' onClick={logUserIn}>{'Log in >'}</button>
+        
       </div>
     );
 }

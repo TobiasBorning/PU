@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './SignUp.css';
-import { handleCreateUser } from '../../utils/users/login';
+import { handleCreateUser } from '../../utils/login/login';
 import { auth } from '../../config/firebase';
 import { useNavigate } from 'react-router-dom';
 
@@ -24,7 +24,7 @@ const SignUp: React.FC = () => {
     const login = await handleCreateUser(auth, email, password, firstname, lastname);
     if (login === 'Success!') {
       setResponse('Success! Redirecting to login page...');
-      navigate('main');
+      navigate('/main');
     }
     else {
       setResponse(login);
@@ -37,7 +37,7 @@ const SignUp: React.FC = () => {
   
   return (
     <div className='container'>
-      <p className='header'>Welcome to Moviemate</p>
+      <h1 className='header'>Moviemate</h1>
       <br></br>
       <p>{response}</p>
       <br></br>
@@ -73,9 +73,8 @@ const SignUp: React.FC = () => {
       <br></br>
       <p>Password must be at least 6 characters long</p>
       <br />
-      <button type='submit' onClick={createUser}>Sign Up</button>
-      <br></br>
       <button onClick={navigateBack}>{'< Back'}</button>
+      <button type='submit' onClick={createUser}>{'Sign Up >'}</button>
     </div>
   );
 }
