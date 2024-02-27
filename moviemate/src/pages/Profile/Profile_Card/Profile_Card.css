@@ -1,0 +1,11 @@
+.PC{
+    width: 400px;
+    margin: 20px;
+    border-radius: 6px;
+    padding-bottom: 20px;
+    background: beige
+}
+.Profile-down img{
+height: 200px;
+border-radius: 150px;
+}
