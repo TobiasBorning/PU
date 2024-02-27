@@ -1,0 +1,23 @@
+.movieInfo{
+    text-align: left;
+    color: #d8d8d8;
+    margin-left: 20px;
+}
+
+.container {
+    background-color: #373737;
+}
+
+.movieInfo button {
+    margin-left: 0;
+}
+
+.movieInfo h1 {
+    color: #e4b036;
+}
+
+.movieInfo img {
+    margin-left: -5px;
+    border: transparent 5px solid;
+    border-radius: 25px;
+}

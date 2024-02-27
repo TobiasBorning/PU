@@ -1,13 +1,21 @@
 import './App.css';
-import BasicComponent from './components/basicComponent';
-import TextLayout from './components/textLayout';
+import { useNavigate } from 'react-router-dom'; //*
 
 function App() {
+  const navigate = useNavigate();
 
-  return (
-    <div className="App">
-      <TextLayout />
-      <BasicComponent />
+  return (  
+    <div className="container">
+      <h1 className='header'>Moviemate</h1>
+      <br />
+      <div>
+        <button onClick={() => navigate('/login')}>
+          Log in
+        </button>
+        <button onClick={() => navigate('/signup')}>
+          Sign up
+        </button>
+      </div>
     </div>
   );
 }
