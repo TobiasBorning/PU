@@ -30,9 +30,11 @@ export const addMovieToUser = (uid: string, movieId: string) => {
                 user.movies = [] as string[];
             }
             if (user) {
-                const movies = user.movies;
-                movies.push(movieId);
-                setDoc(userDocRef, { movies }, { merge: true });
+                const movies: string[] = user.movies;
+                if (!movies.includes(movieId)) {
+                    movies.push(movieId);
+                    setDoc(userDocRef, { movies }, { merge: true });
+                }
             }
         } else {
             throw new Error("No such document!");
@@ -64,7 +66,7 @@ export const removeMovieFromUser = (uid: string, movieId: string) => {
 
 export const getUserMovies = (uid: string): Movie[] => {
     const userDocRef = doc(db, "users", uid);
-    const movieIds = getDoc(userDocRef).then((doc) => {
+    const movieIds: Promise<string[]> = getDoc(userDocRef).then((doc) => {
         if (doc.exists()) {
             const user = doc.data();
             if (user?.movies) {
@@ -78,10 +80,33 @@ export const getUserMovies = (uid: string): Movie[] => {
     });
 
     const movieList: Movie[] = []
-    for (const movieId in movieIds) {
-        getMovie(movieId).then((movie) => {
-            movieList.push(movie);
+    movieIds.then((list) => {
+        list.forEach((movieId) => {
+            getMovie(movieId).then((movie) => {
+                movieList.push(movie);
+            })
         });
-    }
+    });
     return movieList;
+}
+
+export const isInMyMovies = (uid: string, movieId: string) => {
+    const userDocRef = doc(db, "users", uid);
+    const containsMovie = getDoc(userDocRef).then((doc) => {
+        if (doc.exists()) {
+            const userMovies = doc.data()?.movies;
+            if (!userMovies) {
+                return false;
+            }
+            if (userMovies.includes(movieId)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        } else {
+            throw new Error("No such document!");
+        }
+    });
+    return containsMovie;
 }
