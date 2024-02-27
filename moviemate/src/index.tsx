@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import Login from './components/Login/Login';
-import SignUp from './components/SignUp/SignUp';
-import ShowMovie from './components/Movie/ShowMovie';
-import ScrollingComponent from './components/Scrolling/ScrollingComponent';
+import Login from './pages/Login/Login';
+import SignUp from './pages/SignUp/SignUp';
+import Movie from './pages/Movie/Movie';
+import MainPage from './pages/Main/mainPage';
 
 import {
   createBrowserRouter,
@@ -26,11 +26,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/main",
-    element: <ScrollingComponent/>,
+    element: <MainPage/>,
   },
   {
     path: "/movie",
-    element: <ShowMovie/>,
+    element: <Movie/>,
   }
 ]);
 

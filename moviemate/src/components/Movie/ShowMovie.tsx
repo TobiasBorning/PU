@@ -40,7 +40,6 @@ function ShowMovie() {
                 <br />
                 <button onClick={() => navigate('/main')}>Go back</button>                
             </div> 
-            
         </div>
     );
 }
