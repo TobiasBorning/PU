@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './ScrollingComponent.css';
 import { getMovies, Movie } from '../../utils/movieUtils/fetchAndFillDb';
 import { NavBar } from '../Navbar/NavBar';
-import { User, getUser } from '../../utils/login/users';
+import { User, getUser } from '../../utils/user/users';
 import { auth } from '../../config/firebase';
 
 function ScrollingComponent() {
@@ -21,10 +21,10 @@ function ScrollingComponent() {
         fillMovieList();
     }, []);
 
-    const getName = async () => {
+    const getName = () => {
         const user = auth.currentUser;
         if (user) {
-            await getUser(user.uid).then((user: User) => {
+            getUser(user.uid).then((user: User) => {
                 setUser(', ' + user.firstname);
             });       
         }
