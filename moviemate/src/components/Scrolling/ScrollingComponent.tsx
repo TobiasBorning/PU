@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ScrollingComponent.css';
 import { getMovies, Movie } from '../../utils/movieUtils/fetchAndFillDb';
-//import { NavBar } from '../Navbar/NavBar';
-import { User, getUser } from '../../utils/login/users';
-import { auth } from '../../config/firebase';
 
-function ScrollingComponent() {
-    const [user, setUser] = useState<string>('');
+type Props = { 
+   containerType: string;
+}
+
+const ScrollingComponent: React.FC<Props> = (props) =>{
     const navigate = useNavigate();
-    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [movieList, setMovieList] = useState<Movie[]>([]);
     const [boxArray,setBoxArray] = useState<JSX.Element[]>([]);
     const [movieCount, setMovieCount] = useState<number>(20);
@@ -30,35 +29,15 @@ function ScrollingComponent() {
     // fyller container med filmer når filmene er hentet
     useEffect(() => {
         fillContainer();
-        getName();
     },[movieList]);
-
-    //laster inn siden når både bruker og movielist er fylt
-    useEffect(() => {
-        if (movieList.length > 0 && user) {
-            setIsLoading(false);
-        }
-    }, [movieList, user]);
-
-    const getName = async () => {
-        if (isLoading) {
-            const user = auth.currentUser;
-            if (user) {
-                await getUser(user.uid).then((user: User) => {
-                    setUser(', ' + user.firstname);
-                });       
-            }
-        }
-        
-    }
 
     // navigerer til en filmside
     const goToMovie = (number: number) => {
         navigate('/movie', { state: { number } });
     }
     
-    // fyller container med filmer
-    const fillContainer = () => {
+    // fyller container med alle filmer
+    const fillContainerDefault = () => {
         const b = movieList.map((movie) => (
             <div key={movie.id} className="box" onClick={() => {
                 if (movie.id !== undefined) { 
@@ -74,6 +53,14 @@ function ScrollingComponent() {
         setBoxArray(b);
     }
 
+    
+    const fillContainer = () => {
+        if (props.containerType === 'default') {
+            fillContainerDefault();
+        }
+    }
+
+
     // øker filmer med 20
     // TODO: oppdaterer ikke før 2 klikk
     const increaseMovieCount = () => {
@@ -86,22 +73,11 @@ function ScrollingComponent() {
     }
 
     return (
-        <div className='mainPageContainer'>
-            {isLoading ? <h1 className='welcomeText'>Loading...</h1>
-            :
-            <div>
-                <br />
-                <div className='welcomeText'>
-                    <h1>Hey{user}</h1>
-                    <p>Welcome to Moviemate</p>
-                </div>
-                <br />
-                <div className="scrollingContainer">
-                    {boxArray}
-                    <button onClick={increaseMovieCount}>Load more movies..</button>
-                </div>
+        <div>
+            <div className="scrollingContainer">
+                {boxArray}
+                <button onClick={increaseMovieCount}>Load more movies..</button>
             </div>
-            }
         </div>
     );
 }
