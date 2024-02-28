@@ -3,6 +3,8 @@ import ScrollingComponent from "../../components/Scrolling/ScrollingComponent";
 import React, { useEffect, useState } from 'react';
 import { auth } from '../../config/firebase';
 import { User, getUser } from '../../utils/login/users';
+import './mainPage.css';
+import { get } from "http";
 
 const MainPage: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -10,6 +12,7 @@ const MainPage: React.FC = () => {
 
 
     const getName = async () => {
+        console.log('Getting name');
         const user = auth.currentUser;
         if (user) {
             await getUser(user.uid).then((user: User) => {
@@ -19,14 +22,15 @@ const MainPage: React.FC = () => {
     }
 
     useEffect(() => {
-        if (userName === '') {
-            getName();
-        }
-        else {
-            setIsLoading(false);
-        }
+        console.log(userName);
+        setIsLoading(false);
     }, [userName]);
     
+    useEffect(() => {
+        if (auth.currentUser) {
+            getName();
+        }
+    });
 
     return (
         <div className="mainPageContainer">
