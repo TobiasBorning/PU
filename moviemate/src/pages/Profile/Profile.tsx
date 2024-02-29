@@ -31,7 +31,6 @@ const Profile: React.FC = () => {
         <div>
         <button onClick={() => navigate('/main')}>Back</button>
         <h1 className='welcomeText'>Welcome to your personal site{user} </h1>
-        < Profile_Card />
         <h2 className='infoText'>Your Saved Movies</h2>
         <ScrollingComponent />
         </div>
