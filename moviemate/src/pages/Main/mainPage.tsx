@@ -1,11 +1,49 @@
 import ScrollingComponent from "../../components/Scrolling/ScrollingComponent";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { auth } from '../../config/firebase';
+import { User, getUser } from '../../utils/login/users';
+import './mainPage.css';
+import { get } from "http";
 
 const MainPage: React.FC = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [userName, setUserName] = useState<string>('');
+
+
+    const getName = async () => {
+        console.log('Getting name');
+        const user = auth.currentUser;
+        if (user) {
+            await getUser(user.uid).then((user: User) => {
+                setUserName(', ' + user.firstname);
+            });       
+        }
+    }
+
+    useEffect(() => {
+        console.log(userName);
+        setIsLoading(false);
+    }, [userName]);
+    
+    useEffect(() => {
+        if (auth.currentUser) {
+            getName();
+        }
+    });
+
     return (
-        <div>
-            <ScrollingComponent />
+        <div className="mainPageContainer">
+            {isLoading ? <h1 className="welcomeText">Loading...</h1> : 
+            <div>
+                <div className='welcomeText'>
+                    <h1>Hey{userName}</h1>
+                    <p>Welcome to Moviemate</p>
+                </div>
+                <br />
+                <ScrollingComponent containerType="default"/>
+            </div>
+            }
         </div>
     );
 }

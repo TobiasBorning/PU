@@ -1,0 +1,12 @@
+.mainPageContainer {
+    padding-left: 180px;
+    padding-right: 180px;
+    display: flex;
+    justify-content: left;
+}
+
+.welcomeText {
+    margin-top: 50px;
+    text-align: left;
+    color: #e4b036;
+}
