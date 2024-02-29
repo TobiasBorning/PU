@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './ShowMovie.css';
 import { getMovie, Movie } from '../../utils/movieUtils/fetchAndFillDb';
+import { auth } from '../../config/firebase';
+import { addMovieToUser, getUserMovies, isInMyMovies, removeMovieFromUser } from '../../utils/user/users';
 
 
 function ShowMovie() {
@@ -11,12 +13,19 @@ function ShowMovie() {
         title: 'Loading...',
     });
     const navigate = useNavigate();
+    const [isInList,setIsInList] = useState(false);
 
     useEffect(() => {
         const fetchMovie = async () => {
             if (number !== undefined) {
                 const movie = await getMovie(number.toString());
                 setMovie(movie);
+                const authUser = auth.currentUser;
+                if (authUser && movie.id) {
+                    isInMyMovies(authUser.uid,movie.id).then((contains) => {
+                        setIsInList(contains);
+                    });
+                }
             }
             else {
                 setMovie({
@@ -27,6 +36,28 @@ function ShowMovie() {
         fetchMovie();
     });
 
+    const linkUserToMovie = () => {
+        const authUser = auth.currentUser;
+        if (authUser && movie.id) {
+            addMovieToUser(authUser.uid, movie.id);
+        }
+    }
+    const removeFromUserList = () => {
+        const authUser = auth.currentUser;
+        if (authUser && movie.id) {
+            removeMovieFromUser(authUser.uid, movie.id);
+        }
+    }
+
+    const addOrRemove = () => {
+        if (isInList) {
+            removeFromUserList();
+        }
+        else {
+            linkUserToMovie();
+        }
+    }
+
     return (
         <div className='container'>
             <div className='movieInfo'>
@@ -36,10 +67,14 @@ function ShowMovie() {
                 <p>Actors: {movie.actors?.join(", ")}</p>
                 <p>Director: {movie.director}</p>
                 <p>Plot: {movie.plot}</p>
-                <img src={movie.posterUrl} alt=''/>     
+                <img src={movie.posterUrl} alt='' />
                 <br />
-                <button onClick={() => navigate('/main')}>Go back</button>                
-            </div> 
+                <button onClick={() => addOrRemove()}>
+                    {isInList ? 'Remove from my list' : 'Add to my list'}
+                </button>
+                <br />
+                <button onClick={() => navigate('/main')}>Go back</button>
+            </div>
         </div>
     );
 }
