@@ -64,7 +64,7 @@ export const removeMovieFromUser = (uid: string, movieId: string) => {
     });
 }
 
-export const getUserMovies = (uid: string): Movie[] => {
+export const getUserMovies = async (uid: string): Promise<Movie[]> => {
     const userDocRef = doc(db, "users", uid);
     const movieIds: Promise<string[]> = getDoc(userDocRef).then((doc) => {
         if (doc.exists()) {
@@ -79,15 +79,16 @@ export const getUserMovies = (uid: string): Movie[] => {
         }
     });
 
-    const movieList: Movie[] = []
-    movieIds.then((list) => {
+    const loadedmovies = movieIds.then((list) => {
+        const movieList: Movie[] = []
         list.forEach((movieId) => {
             getMovie(movieId).then((movie) => {
                 movieList.push(movie);
             })
         });
+        return movieList;
     });
-    return movieList;
+    return await loadedmovies;
 }
 
 export const isInMyMovies = (uid: string, movieId: string) => {

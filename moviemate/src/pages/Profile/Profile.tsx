@@ -7,8 +7,6 @@ import { useNavigate } from "react-router";
 import '../../components/Scrolling/ScrollingComponent.css';
 
 
-
-
 const Profile: React.FC = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState<string>('');
@@ -32,7 +30,7 @@ const Profile: React.FC = () => {
         <button onClick={() => navigate('/main')}>Back</button>
         <h1 className='welcomeText'>Welcome to your personal site{user} </h1>
         <h2 className='infoText'>Your Saved Movies</h2>
-        <ScrollingComponent containerType="default" />
+        <ScrollingComponent containerType="usersList" uid={auth.currentUser?.uid} />
         </div>
     );
 }

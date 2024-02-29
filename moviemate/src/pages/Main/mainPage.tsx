@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { auth } from '../../config/firebase';
 import { User, getUser } from '../../utils/user/users';
 import './mainPage.css';
-import { get } from "http";
 import { useNavigate } from 'react-router-dom';
 
 const MainPage: React.FC = () => {
