@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import './ScrollingComponent.css';
 import { getMovies, Movie } from '../../utils/movieUtils/fetchAndFillDb';
 import { NavBar } from '../Navbar/NavBar';
-import { User, getUser } from '../../utils/login/users';
 import { auth } from '../../config/firebase';
 
 function ScrollingComponent() {
@@ -17,18 +16,9 @@ function ScrollingComponent() {
                 setMovieList(movies);
             });
         };
-        getName();
         fillMovieList();
     }, []);
 
-    const getName = async () => {
-        const user = auth.currentUser;
-        if (user) {
-            await getUser(user.uid).then((user: User) => {
-                setUser(', ' + user.firstname);
-            });       
-        }
-    }
 
     const goToMovie = (number: number) => {
         navigate('/movie', { state: { number } });
@@ -50,11 +40,6 @@ function ScrollingComponent() {
 
     return (
         <div className='mainPageContainer'>
-            <br />
-            <div className='welcomeText'>
-                <h1>Hey{user}</h1>
-                <p>Welcome to Moviemate</p>
-            </div>
             <br />
             <div className="scrollingContainer">
                 {boxes}

@@ -5,7 +5,13 @@
 
 .welcomeText {
     margin-top: 50px;
-    text-align: left;
+    text-align: center;
+    color: #e4b036;
+}
+
+.infoText {
+    margin-top: 50px;
+    text-align: center;
     color: #e4b036;
 }
 .scrollingContainer {
