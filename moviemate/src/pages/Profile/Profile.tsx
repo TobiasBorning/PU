@@ -5,6 +5,7 @@ import { User, getUser } from '../../utils/user/users';
 import { auth } from '../../config/firebase';
 import { useNavigate } from "react-router";
 import '../../components/Scrolling/ScrollingComponent.css';
+import './Profile.css'
 
 
 const Profile: React.FC = () => {
@@ -27,9 +28,9 @@ const Profile: React.FC = () => {
 }
     return (
         <div>
-        <button onClick={() => navigate('/main')}>Back</button>
+        <button onClick={() => navigate('/main')}>Go To Main</button>
         <h1 className='welcomeText'>Welcome to your personal site{user} </h1>
-        <h2 className='infoText'>Your Saved Movies</h2>
+        <h2 className='welcomeText'>Your Saved Movies: </h2>
         <ScrollingComponent containerType="usersList" uid={auth.currentUser?.uid} />
         </div>
     );

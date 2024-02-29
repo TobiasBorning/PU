@@ -36,7 +36,7 @@ const MainPage: React.FC = () => {
         <div className="mainPageContainer">
             {isLoading ? <h1 className="welcomeText">Loading...</h1> : 
             <div>
-                <button onClick={() => navigate('/profile')}>Profile</button>
+                <button onClick={() => navigate('/profile')}>Go To Profile</button>
                 <div className='welcomeText'>
                     <h1>Hey{userName}</h1>
                     <p>Welcome to Moviemate</p>
