@@ -1,3 +1,7 @@
+/* ShowMovie.css */
+
+  
+
 .movieInfo{
     text-align: left;
     color: #d8d8d8;
@@ -21,3 +25,11 @@
     border: transparent 5px solid;
     border-radius: 25px;
 }
+
+.star {
+    color: #ffc107; /* Farge på stjernene når de er valgt */
+  }
+
+  input[type = radio]{
+    display: none;
+  }
