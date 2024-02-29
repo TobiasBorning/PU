@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import './Profile_Card.css';
-import { User, getUser } from '../../../utils/login/users'
+import { User, getUser } from '../../../utils/user/users'
 import { auth } from '../../../config/firebase';
 import Random_Profile_Icon from '../assets/profiles/Random_Profile_Icon';
 

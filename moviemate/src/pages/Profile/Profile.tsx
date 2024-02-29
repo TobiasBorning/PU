@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Profile_Card from './Profile_Card/Profile_Card';
 import ScrollingComponent from '../../components/Scrolling/ScrollingComponent';
-import { User, getUser } from '../../utils/login/users';
+import { User, getUser } from '../../utils/user/users';
 import { auth } from '../../config/firebase';
 import { useNavigate } from "react-router";
 import '../../components/Scrolling/ScrollingComponent.css';
@@ -32,7 +32,7 @@ const Profile: React.FC = () => {
         <button onClick={() => navigate('/main')}>Back</button>
         <h1 className='welcomeText'>Welcome to your personal site{user} </h1>
         <h2 className='infoText'>Your Saved Movies</h2>
-        <ScrollingComponent />
+        <ScrollingComponent containerType="default" />
         </div>
     );
 }
