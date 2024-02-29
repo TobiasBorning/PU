@@ -4,6 +4,8 @@ import './ShowMovie.css';
 import { getMovie, Movie } from '../../utils/movieUtils/fetchAndFillDb';
 import { Review, getMovieReview, reviewMovie } from '../../utils/review/reviewUtils';
 import { auth } from '../../config/firebase';
+import Rating from './Rating'; // Import the Rating component
+
 
 function ShowMovie() {
     const location = useLocation();
@@ -74,7 +76,8 @@ function ShowMovie() {
                 <p>Plot: {movie.plot}</p>
                 <p>Rating: {review.rating}</p>
                 <p>Comment: {review.comment}</p>
-                <img src={movie.posterUrl} alt=''/>     
+                <img src={movie.posterUrl} alt=''/> 
+                <Rating />    
                 <br />
                 <button onClick={testComment}>Test comment function</button>
                 <br />
