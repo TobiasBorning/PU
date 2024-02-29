@@ -1,5 +1,5 @@
 import { db } from '../../config/firebase';
-import { collection, doc, getDoc, setDoc, getDocs } from 'firebase/firestore';
+import { collection, query, limit, doc, getDoc, setDoc, getDocs } from 'firebase/firestore';
 import data from './db.json';
 
 export interface Movie {
@@ -102,9 +102,10 @@ export const getMovie = async (id: string) : Promise<Movie> =>  {
     });
 }
 
-export const getMovies = async () : Promise<Movie[]> => {
+export const getMovies = async (movieCount: number) : Promise<Movie[]> => {
     const movies: Movie[] = [];
-    const querySnapshot = await getDocs(collection(db, 'movies'));
+    const q = query(collection(db, 'movies'),limit(movieCount));
+    const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
         const data = doc.data();
         const movie: Movie = {
