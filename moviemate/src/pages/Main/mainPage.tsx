@@ -17,7 +17,7 @@ const MainPage: React.FC = () => {
         if (user) {
             await getUser(user.uid).then((user: User) => {
                 setUserName(', ' + user.firstname);
-            });       
+            });
         }
     }
 
@@ -25,7 +25,7 @@ const MainPage: React.FC = () => {
         console.log(userName);
         setIsLoading(false);
     }, [userName]);
-    
+
     useEffect(() => {
         if (auth.currentUser) {
             getName();
@@ -41,9 +41,6 @@ const MainPage: React.FC = () => {
                     <h1>Hey{userName}</h1>
                     <p>Welcome to Moviemate</p>
                 </div>
-                <br />
-                <ScrollingComponent containerType="default"/>
-            </div>
             }
         </div>
     );
