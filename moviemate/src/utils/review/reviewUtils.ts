@@ -36,7 +36,7 @@ export const reviewMovie = async (userId: string, movieId: string, rating: numbe
     try {
         const movieReviewDoc = doc(db, 'movieReview', userId + movieId); // Unique ID for the review, calling the function again will overwrite the review
         await setDoc(movieReviewDoc, {
-            uid: userId,
+            userId: userId,
             movieId: movieId,
             rating: rating,
             comment: comment
@@ -65,7 +65,7 @@ export const getMovieReview = async (userId: string, movieId: string) : Promise<
         console.log(data);
         reviewOut.comment = data.comment;
         reviewOut.rating = data.rating;
-        reviewOut.uid = data.uid;
+        reviewOut.userId = data.uid;
         reviewOut.movieId = data.movieId;
     });
     return reviewOut;

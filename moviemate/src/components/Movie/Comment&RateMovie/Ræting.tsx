@@ -1,43 +1,80 @@
-import React, {useState} from "react";
+import React, {useState, useEffect, useId} from "react";
 import { FaStar } from "react-icons/fa";
 import { auth } from "../../../config/firebase";
 import { User, getUser } from "../../../utils/login/users";
-import { collection, getDocs, query, where, setDoc, doc } from "firebase/firestore";
+import { collection, getDocs, query, where, setDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
-
+import { getMovie, Movie } from "../../../utils/movieUtils/fetchAndFillDb";
+import ShowMovie from "../ShowMovie";
+import { useNavigate } from "react-router-dom";
 export interface Ræting {
-    uid?: string;
+    userId?: string;
     movieId?: string;
     rating?: number;
     comment?: string;
 }
 
+export const getMovieReview = async (userId: string, movieId: string) : Promise<Ræting> => {
+  const q = query(collection(db, 'movieReview'),where('uid','==',userId),where('movieId','==',movieId));
+  const querySnapshot = await getDocs(q);
+  let reviewOut: Ræting = {rating: 0, comment: ""};
+  querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      console.log(data);
+      reviewOut.comment = data.comment;
+      reviewOut.rating = data.rating;
+      reviewOut.userId = data.userId;
+      reviewOut.movieId = data.movieId;
+  });
+  return reviewOut;
+}
 export const Comment: React.FC = () => {
-  const [rating, setRating] = useState<number | null>(null);
-  const [hover, setHover] = useState<number | null>(null);
-  const [comment, setComment] = useState<string>('');
-  
-  const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setComment(event.target.value);
-  };
+    const [rating, setRating] = useState<number | null>(null);
+    const [hover, setHover] = useState<number | null>(null);
+    const [comment, setComment] = useState<string>('');
+    const [userId, getUser] = useState<string>('');
+    const [movieId, getMovie] = useState<string | null>(null);
+    const navigate = useNavigate();
 
-  const handleSubmit = () => {
-      console.log('Rating:', rating )
-      console.log('Comment:', comment)
-  };
+    const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setComment(event.target.value);
+    };
 
-  const getName = async () => {
-      const user = auth.currentUser;
-      if (user) {
-          await getUser(user.uid).then((user: User) => {
-              getUser(',' + user.firstname)
+    const addRæting = async () => {
+      try {
+      const movieReviewDoc = doc(db, 'movieReview', userId + movieId);
+        await setDoc(movieReviewDoc, {
+            uid: userId,
+            movieId: movieId,
+            rating: rating,
+            comment: comment
           });
-      };
+          setRating(0);
+      setComment('');
+    } 
+    catch (error) {
+      console.error('Error adding comment:', error);
     }
+    const getMovieReview = async (userId: string, movieId: string) : Promise<Ræting> => {
+      const q = query(collection(db, 'movieReview'),where('uid','==',userId),where('movieId','==',movieId));
+      const querySnapshot = await getDocs(q);
+      let reviewOut: Ræting = {rating: 0, comment: ""};
+      querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          console.log(data);
+          reviewOut.comment = data.comment;
+          reviewOut.rating = data.rating;
+          reviewOut.uid = data.uid;
+          reviewOut.movieId = data.movieId;
+      });
+    }
+
+ };
+ 
 
     return (
         <div>
-            <h2>Give ræting </h2>
+            <h2>Give your ræting, <h1>{userId}</h1> </h2>
             {[...Array(5)].map((star, index) => {
         const ratingValue = index + 1;
 
@@ -55,6 +92,7 @@ export const Comment: React.FC = () => {
               size={30}
               onMouseEnter={() => setHover(ratingValue)}
               onMouseLeave={() => setHover(null)}
+              onChange={addRæting}
             />
           </label>
         );
@@ -64,10 +102,8 @@ export const Comment: React.FC = () => {
       <label htmlFor="comment">Comment:</label>
       <textarea id="comment" value={comment} onChange={handleCommentChange} />
     </div>
-    <button onClick={handleSubmit}>Submit</button>
+    <button onClick= {addRæting}>Submit</button>
     </div>
     
   );
 };
-
-
