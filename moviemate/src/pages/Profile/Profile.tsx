@@ -20,12 +20,12 @@ const Profile: React.FC = () => {
     }, []);
     const getName = async () => {
     const user = auth.currentUser;
-    if (user) {
-        await getUser(user.uid).then((user: User) => {
-            setUser(', ' + user.firstname);
-        });       
+        if (user) {
+            await getUser(user.uid).then((user: User) => {
+                setUser(', ' + user.firstname);
+            });       
+        }
     }
-}
     return (
         <div>
         <button onClick={() => navigate('/main')}>Go To Main</button>
