@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 const MainPage: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [userName, setUserName] = useState<string>('');
-
+    const navigate = useNavigate();
 
     const getName = async () => {
         console.log('Getting name');

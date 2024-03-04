@@ -79,6 +79,7 @@ export const getUserMovies = async (uid: string): Promise<Movie[]> => {
             })
         );
         const userMovies = loadedMovies.filter((movie) => movie !== null) as Movie[];
+        console.log(userMovies);
         return userMovies;
     } catch (error) {
         throw error;

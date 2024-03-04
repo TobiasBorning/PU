@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './ScrollingComponent.css';
 import { getMovies, Movie } from '../../utils/movieUtils/fetchAndFillDb';
 import { getUserMovies } from '../../utils/user/users';
-import { get } from 'http';
+
 
 type Props = { 
    containerType: string;
@@ -77,7 +77,7 @@ const ScrollingComponent: React.FC<Props> = (props) =>{
         if (props.containerType === "default") {
             fillAllMovies();
         }
-        if (props.containerType === "usersList") {
+        if (props.containerType === "userList") {
             fillWithUsersMovies();
         }
     }
@@ -86,9 +86,6 @@ const ScrollingComponent: React.FC<Props> = (props) =>{
     const increaseMovieCount = () => {
         setMovieCount(movieCount + 20);
         console.log(movieCount);
-        getMovies(movieCount).then((movies) => {
-            setMovieList(movies);   
-        });
         fillContainer();
     }
 
@@ -96,7 +93,6 @@ const ScrollingComponent: React.FC<Props> = (props) =>{
         <div>
             <div className="scrollingContainer">
                 {boxArray}
-                <button style={{margin: '0px'}} onClick={increaseMovieCount}>Load more movies..</button>
             </div>
             <br />
             <button onClick={increaseMovieCount}>Load more movies..</button>
