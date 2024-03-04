@@ -64,7 +64,7 @@ export const Comment: React.FC = () => {
           console.log(data);
           reviewOut.comment = data.comment;
           reviewOut.rating = data.rating;
-          reviewOut.uid = data.uid;
+          reviewOut.userId = data.uid;
           reviewOut.movieId = data.movieId;
       });
     }
