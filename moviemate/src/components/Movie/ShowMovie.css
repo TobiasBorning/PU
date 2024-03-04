@@ -1,4 +1,4 @@
-.movieInfo{
+.movieInfo {
     text-align: left;
     color: #d8d8d8;
     margin-left: 20px;
@@ -6,6 +6,7 @@
 
 .container {
     background-color: #373737;
+    margin-top: 90px;
 }
 
 .movieInfo button {
