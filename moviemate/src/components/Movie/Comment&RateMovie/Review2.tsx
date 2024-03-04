@@ -4,7 +4,7 @@ import { collection, getDocs, query, where, setDoc, doc } from 'firebase/firesto
 import { db } from '../../../config/firebase';
 import { auth } from "../../../config/firebase";
 import { User, getUser, } from '../../../utils/login/users';
-
+import Rating from "../Rating";
 interface Comment {
     uid?: string;
     movieId?: string;
@@ -27,27 +27,21 @@ const CommentInput: React.FC = () => {
     console.log('Rating:', rating);
     console.log('Comment:', comment);
   };
+
   const getName = async () => {
     const user = auth.currentUser;
     if (user) {
         await getUser(user.uid).then((user: User) => {
             getUser(', ' + user.firstname);
         });       
-    }
+    };
 
   return (
     <div>
       <h2>Input Comment</h2>
       <div>
         <label htmlFor="rating">Rating:</label>
-        <input
-          type="number"
-          id="rating"
-          min="1"
-          max="5"
-          value={rating}
-          onChange={handleRatingChange}
-        />
+        <Rating />
       </div>
       <div>
         <label htmlFor="comment">Comment:</label>
@@ -62,14 +56,7 @@ return (
     <h2>Input Comment</h2>
     <div>
       <label htmlFor="rating">Rating:</label>
-      <input
-        type="number"
-        id="rating"
-        min="1"
-        max="5"
-        value={rating}
-        onChange={handleRatingChange}
-      />
+        <Rating />
     </div>
     <div>
       <label htmlFor="comment">Comment:</label>

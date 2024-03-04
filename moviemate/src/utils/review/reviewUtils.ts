@@ -1,5 +1,6 @@
 import { collection, getDocs, query, where, setDoc, doc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
+import { Ræting } from '../../components/Movie/Comment&RateMovie/Ræting';
 
 
 /**
@@ -55,10 +56,10 @@ export const reviewMovie = async (userId: string, movieId: string, rating: numbe
  * @param movieId // The movie's ID
  * @returns Review object
  */
-export const getMovieReview = async (userId: string, movieId: string) : Promise<Review> => {
+export const getMovieReview = async (userId: string, movieId: string) : Promise<Ræting> => {
     const q = query(collection(db, 'movieReview'),where('uid','==',userId),where('movieId','==',movieId));
     const querySnapshot = await getDocs(q);
-    let reviewOut: Review = {rating: 0, comment: ""};
+    let reviewOut: Ræting = {rating: 0, comment: ""};
     querySnapshot.forEach((doc) => {
         const data = doc.data();
         console.log(data);

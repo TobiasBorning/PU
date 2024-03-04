@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './ShowMovie.css';
 import { getMovie, Movie } from '../../utils/movieUtils/fetchAndFillDb';
-import { Review, getMovieReview, reviewMovie } from '../../utils/review/reviewUtils';
 import { auth } from '../../config/firebase';
-import Rating from './Rating'; // Import the Rating component
+import { Ræting, getMovieReview, Comment } from './Comment&RateMovie/Ræting';
 
 
 function ShowMovie() {
@@ -13,7 +12,7 @@ function ShowMovie() {
     const [movie, setMovie] = useState<Movie>({
         title: 'Loading...',
     });
-    const [review, setReview] = useState<Review>({
+    const [review, setReview] = useState<Ræting>({
         rating: 0,
         comment: '',
     });
@@ -55,16 +54,6 @@ function ShowMovie() {
         fetchReview();
     },[auth.currentUser,movieId]);
 
-    const testComment = () => {
-        if (auth.currentUser) {
-            reviewMovie(auth.currentUser.uid, movieId.toString(), 5, 'Very good movie');
-            console.log('Commented');
-        }
-        else {
-            console.error('User not logged in');
-        }
-    }
-
     return (
         <div className='container'>
             <div className='movieInfo'>
@@ -77,9 +66,7 @@ function ShowMovie() {
                 <p>Rating: {review.rating}</p>
                 <p>Comment: {review.comment}</p>
                 <img src={movie.posterUrl} alt=''/> 
-                <Rating />    
-                <br />
-                <button onClick={testComment}>Test comment function</button>
+                <Comment />
                 <br />
                 <button onClick={() => navigate('/main')}>Go back</button>                
             </div> 
