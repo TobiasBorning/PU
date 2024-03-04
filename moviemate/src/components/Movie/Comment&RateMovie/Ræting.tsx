@@ -15,7 +15,7 @@ export interface Ræting {
 }
 
 export const getMovieReview = async (userId: string, movieId: string) : Promise<Ræting> => {
-  const q = query(collection(db, 'movieReview'),where('uid','==',userId),where('movieId','==',movieId));
+  const q = query(collection(db, 'movieRæting'),where('uid','==',userId),where('movieId','==',movieId));
   const querySnapshot = await getDocs(q);
   let reviewOut: Ræting = {rating: 0, comment: ""};
   querySnapshot.forEach((doc) => {
@@ -42,7 +42,7 @@ export const Comment: React.FC = () => {
 
     const addRæting = async () => {
       try {
-      const movieReviewDoc = doc(db, 'movieReview', userId + movieId);
+      const movieReviewDoc = doc(db, 'movieRæting', userId + movieId);
         await setDoc(movieReviewDoc, {
             uid: userId,
             movieId: movieId,
@@ -54,19 +54,6 @@ export const Comment: React.FC = () => {
     } 
     catch (error) {
       console.error('Error adding comment:', error);
-    }
-    const getMovieReview = async (userId: string, movieId: string) : Promise<Ræting> => {
-      const q = query(collection(db, 'movieReview'),where('uid','==',userId),where('movieId','==',movieId));
-      const querySnapshot = await getDocs(q);
-      let reviewOut: Ræting = {rating: 0, comment: ""};
-      querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          console.log(data);
-          reviewOut.comment = data.comment;
-          reviewOut.rating = data.rating;
-          reviewOut.userId = data.uid;
-          reviewOut.movieId = data.movieId;
-      });
     }
 
  };
