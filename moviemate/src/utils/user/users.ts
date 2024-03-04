@@ -64,31 +64,26 @@ export const removeMovieFromUser = (uid: string, movieId: string) => {
     });
 }
 
-export const getUserMovies = (uid: string): Movie[] => {
-    const userDocRef = doc(db, "users", uid);
-    const movieIds: Promise<string[]> = getDoc(userDocRef).then((doc) => {
-        if (doc.exists()) {
-            const user = doc.data();
-            if (user?.movies) {
-                return user.movies;
-            } else {
-                return [] as string[];
-            }
-        } else {
-            throw new Error("No such document!");
-        }
-    });
-
-    const movieList: Movie[] = []
-    movieIds.then((list) => {
-        list.forEach((movieId) => {
-            getMovie(movieId).then((movie) => {
-                movieList.push(movie);
+export const getUserMovies = async (uid: string): Promise<Movie[]> => {
+    try {
+        const userDocRef = doc(db, "users", uid);
+        const movieIds: string[] = (await getDoc(userDocRef)).data()?.movies || [];
+        const loadedMovies: (Movie| null)[] = await Promise.all(
+            movieIds.map(async (movieId) => {
+                try {
+                    const movie = await getMovie(movieId);
+                    return movie;
+                } catch {
+                    return null;
+                }
             })
-        });
-    });
-    return movieList;
-}
+        );
+        const userMovies = loadedMovies.filter((movie) => movie !== null) as Movie[];
+        return userMovies;
+    } catch (error) {
+        throw error;
+    }
+};
 
 export const isInMyMovies = (uid: string, movieId: string) => {
     const userDocRef = doc(db, "users", uid);

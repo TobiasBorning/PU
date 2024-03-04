@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ScrollingComponent.css';
 import { getMovies, Movie } from '../../utils/movieUtils/fetchAndFillDb';
+import { getUserMovies } from '../../utils/user/users';
+import { get } from 'http';
 
 type Props = { 
    containerType: string;
+   uid?: string;
 }
 
 const ScrollingComponent: React.FC<Props> = (props) =>{
@@ -16,14 +19,7 @@ const ScrollingComponent: React.FC<Props> = (props) =>{
 
     // henter filmer fra databasen
     useEffect(() => {
-        const fillMovieList = async () => {
-            if (movieList.length === 0) {
-                getMovies(movieCount).then((movies) => {
-                    setMovieList(movies);
-                });
-            }
-        };
-        fillMovieList();
+        chooseFill();
     }, [movieCount]);
 
     // fyller container med filmer når filmene er hentet
@@ -37,7 +33,7 @@ const ScrollingComponent: React.FC<Props> = (props) =>{
     }
     
     // fyller container med alle filmer
-    const fillContainerDefault = () => {
+    const fillContainer = () => {
         const b = movieList.map((movie) => (
             <div key={movie.id} className="box" onClick={() => {
                 if (movie.id !== undefined) { 
@@ -53,14 +49,38 @@ const ScrollingComponent: React.FC<Props> = (props) =>{
         setBoxArray(b);
     }
 
-    
-    const fillContainer = () => {
-        if (props.containerType === 'default') {
-            fillContainerDefault();
+    const fillAllMovies = () => {
+        if (movieList.length === 0) {
+            console.log(getMovies(movieCount));
+            getMovies(movieCount).then((movies) => {
+                console.log(movies);
+                setMovieList(movies);
+                fillContainer();
+            });
         }
     }
 
+    const fillWithUsersMovies = async () => {
+        if (props.uid) {
+            console.log(getUserMovies(props.uid));
+            getUserMovies(props.uid).then((movies : Movie[]) => {
+                console.log(movies);
+                setMovieList(movies);
+                fillContainer();
+            }).catch((error) => {
+                console.error('Error getting user movies:', error);
+            });
+        }
+    }
 
+    const chooseFill = () => {
+        if (props.containerType === "default") {
+            fillAllMovies();
+        }
+        if (props.containerType === "usersList") {
+            fillWithUsersMovies();
+        }
+    }
     // øker filmer med 20
     // TODO: oppdaterer ikke før 2 klikk
     const increaseMovieCount = () => {
@@ -76,8 +96,9 @@ const ScrollingComponent: React.FC<Props> = (props) =>{
         <div>
             <div className="scrollingContainer">
                 {boxArray}
-                <button style={{margin: '0px'}} onClick={increaseMovieCount}>Load more movies..</button>
             </div>
+            <br />
+            <button onClick={increaseMovieCount}>Load more movies..</button>
         </div>
     );
 }
