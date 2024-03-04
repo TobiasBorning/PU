@@ -7,6 +7,7 @@ import { db } from "../../../config/firebase";
 import { getMovie, Movie } from "../../../utils/movieUtils/fetchAndFillDb";
 import ShowMovie from "../ShowMovie";
 import { useNavigate } from "react-router-dom";
+
 export interface Ræting {
     userId?: string;
     movieId?: string;
@@ -50,7 +51,7 @@ export const Comment: React.FC = () => {
             comment: comment
           });
           setRating(0);
-      setComment('');
+          setComment('');
     } 
     catch (error) {
       console.error('Error adding comment:', error);
