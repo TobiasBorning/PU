@@ -1,12 +1,17 @@
 .mainPageContainer {
-    padding-left: 180px;
-    padding-right: 180px;
-    display: flex;
-    justify-content: left;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(238px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    padding: 50px 0;
 }
 
+
 .welcomeText {
-    margin-top: 50px;
+    grid-column: 1 / -1;
+    justify-self: center;
     text-align: left;
     color: #e4b036;
+    width: 100%;
+    margin-top: 40px;
 }
