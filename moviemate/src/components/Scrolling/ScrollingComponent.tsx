@@ -76,7 +76,7 @@ const ScrollingComponent: React.FC<Props> = (props) =>{
         <div>
             <div className="scrollingContainer">
                 {boxArray}
-                <button onClick={increaseMovieCount}>Load more movies..</button>
+                <button style={{margin: '0px'}} onClick={increaseMovieCount}>Load more movies..</button>
             </div>
         </div>
     );
