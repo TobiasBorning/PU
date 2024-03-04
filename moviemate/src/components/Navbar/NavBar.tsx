@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import './NavBar.css';
+import { useNavigate } from "react-router-dom";
 
 export const NavBar: React.FC = () => {
     const [isSearchActive, setIsSearchActive] = useState(false);
     const toggleSearch = () => {
         setIsSearchActive(current => !current);
     }
+    const navigate = useNavigate();
 
     return (
         <nav className="nav">
-            <a className="site-title" href="/main">MovieMate</a>
+            <p className="site-title" onClick={ () => navigate("/main") } >MovieMate</p>
             <ul>
-                <a className="navBarElements" href="#">My profile</a>
-                <a className="navBarElements" href="#">Filter</a>
+                <p className="navBarElements" onClick={ () => {navigate("/profile")}}>My profile</p>
+                <p className="navBarElements">Filter</p>
                 {isSearchActive ? (
                     <input
                         type="text"
@@ -21,9 +23,9 @@ export const NavBar: React.FC = () => {
                         onBlur={toggleSearch}
                     />
                 ) : (
-                    <a className="navBarElements" onClick={toggleSearch}>
+                    <p className="navBarElements" onClick={toggleSearch}>
                         Search
-                    </a>
+                    </p>
                 )}
             </ul>
         </nav>
