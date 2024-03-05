@@ -3,7 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './ShowMovie.css';
 import { getMovie, Movie } from '../../utils/movieUtils/fetchAndFillDb';
 import { auth } from '../../config/firebase';
-import { addMovieToUser, getUserMovies, isInMyMovies, removeMovieFromUser } from '../../utils/user/users';
+import { addMovieToUser, isInMyMovies, removeMovieFromUser } from '../../utils/user/users';
+import ReviewMovie from './ReviewMovie';
 
 function ShowMovie() {
     const location = useLocation();
@@ -36,7 +37,7 @@ function ShowMovie() {
             fetchMovie();
         }
     });
-
+    
     const linkUserToMovie = () => {
         const authUser = auth.currentUser;
         if (authUser && movie.id) {
@@ -57,6 +58,7 @@ function ShowMovie() {
         else {
             linkUserToMovie();
         }
+        setIsInList(!isInList);
     }
 
     return (
@@ -68,8 +70,9 @@ function ShowMovie() {
                 <p>Actors: {movie.actors?.join(", ")}</p>
                 <p>Director: {movie.director}</p>
                 <p>Plot: {movie.plot}</p>
-                <img src={movie.posterUrl} alt='' />
+                <img src={movie.posterUrl} alt=''/> 
                 <br />
+                <ReviewMovie />
                 <button onClick={() => addOrRemove()}>
                     {isInList ? 'Remove from my list' : 'Add to my list'}
                 </button>
