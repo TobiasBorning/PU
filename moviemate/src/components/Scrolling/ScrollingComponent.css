@@ -1,45 +1,28 @@
-.mainPageContainer {
-    padding-left: 180px;
-    padding-right: 180px;
-}
-
-.welcomeText {
-    margin-top: 50px;
-    text-align: center;
-    color: #e4b036;
-}
-
-.infoText {
-    margin-top: 50px;
-    text-align: center;
-    color: #e4b036;
-}
 .scrollingContainer {
-    text-align: center;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: left;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    justify-content: center;
 }
 
 .scrollingContainer h3 {
     max-width: 238px;
     overflow: hidden;
-    white-space: nowrap; /* Prevent text from wrapping */
+    white-space: nowrap;
     text-overflow: ellipsis;
 }
 
 .box {
-    margin-right: 20px;
-    margin-bottom: 20px;
+    margin: 10px 0;
     padding: 12.5px;
     border-radius: 10px;
     background-color: #373737;
-    width: 238px;
-    height: 480px;
+    width: 238px; 
+    height: 440px; 
     color: #e4b036;
     cursor: pointer;
     white-space: normal;
-    flex: 0 0 auto;
 }
 
 .box:hover {
@@ -52,13 +35,12 @@
 }
 
 .box img {
-    max-width: 100%; 
-    max-height: 100%; 
-    height: auto;     
-    display: block;   
-    margin: auto;     
-    object-fit: cover; 
-    margin-left: -5px;
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+    object-fit: cover;
     border: transparent 5px solid;
     border-radius: 15px;
     filter: sepia(80%);

@@ -1,6 +1,5 @@
 import { collection, getDocs, query, where, setDoc, doc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
-import { Ræting } from '../../components/Movie/Comment&RateMovie/Ræting';
 
 
 /**
@@ -36,7 +35,7 @@ export const reviewMovie = async (userId: string, movieId: string, rating: numbe
     try {
         const movieReviewDoc = doc(db, 'movieReview', userId + movieId); // Unique ID for the review, calling the function again will overwrite the review
         await setDoc(movieReviewDoc, {
-            userId: userId,
+            uid: userId,
             movieId: movieId,
             rating: rating,
             comment: comment
@@ -56,16 +55,16 @@ export const reviewMovie = async (userId: string, movieId: string, rating: numbe
  * @param movieId // The movie's ID
  * @returns Review object
  */
-export const getMovieReview = async (userId: string, movieId: string) : Promise<Ræting> => {
+export const getMovieReview = async (userId: string, movieId: string) : Promise<Review> => {
     const q = query(collection(db, 'movieReview'),where('uid','==',userId),where('movieId','==',movieId));
     const querySnapshot = await getDocs(q);
-    let reviewOut: Ræting = {rating: 0, comment: ""};
+    let reviewOut: Review = {rating: 0, comment: ""};
     querySnapshot.forEach((doc) => {
         const data = doc.data();
         console.log(data);
         reviewOut.comment = data.comment;
         reviewOut.rating = data.rating;
-        reviewOut.userId = data.uid;
+        reviewOut.uid = data.uid;
         reviewOut.movieId = data.movieId;
     });
     return reviewOut;

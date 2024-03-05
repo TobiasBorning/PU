@@ -1,43 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import Profile_Card from './Profile_Card/Profile_Card';
 import ScrollingComponent from '../../components/Scrolling/ScrollingComponent';
-import { User, getUser } from '../../utils/login/users';
+import { User, getUser } from '../../utils/user/users';
 import { auth } from '../../config/firebase';
-import { useNavigate } from "react-router";
 import '../../components/Scrolling/ScrollingComponent.css';
-
+import './Profile.css'
+import { NavBar } from '../../components/Navbar/NavBar';
 
 
 
 const Profile: React.FC = () => {
-    const navigate = useNavigate();
     const [user, setUser] = useState<string>('');
-    useEffect(() => {
-    const fetchData = async () => {
-        await getName();
-    };
 
-    fetchData();
+    useEffect(() => {
+        if (auth.currentUser) {
+            getName();
+        }
     }, []);
+
     const getName = async () => {
-    const user = auth.currentUser;
-    if (user) {
-        await getUser(user.uid).then((user: User) => {
-            setUser(', ' + user.firstname);
-        });       
+        const user = auth.currentUser;
+        console.log(user?.uid);
+        if (user) {
+            await getUser(user.uid).then((user: User) => {
+                setUser(', ' + user.firstname);
+            });       
+        }
     }
-}
     return (
-        <div>
-        <button onClick={() => navigate('/main')}>Back</button>
-        <h1 className='welcomeText'>Welcome to your personal site{user} </h1>
-        < Profile_Card />
-        <h2 className='infoText'>Your Saved Movies</h2>
-        <ScrollingComponent />
+        <div className="mainPageContainer">
+            <div>
+                <NavBar/>
+                <div className='welcomeText'>
+                    <h1>Welcome to your personal page{user}</h1>
+                    <p>Your saved movies</p>
+                </div>
+                {auth.currentUser ? <ScrollingComponent containerType="userList" uid={auth.currentUser.uid} /> : <p>Cant find user</p>}
+            </div>
         </div>
     );
 }
-
 export default Profile;
-
-

@@ -1,41 +1,49 @@
 import ScrollingComponent from "../../components/Scrolling/ScrollingComponent";
-import { useNavigate } from "react-router";
-import Profile from "../Profile/Profile";
-import React, { useState, useEffect } from 'react';
-import { User, getUser } from '../../utils/login/users';
+import React, { useEffect, useState } from 'react';
 import { auth } from '../../config/firebase';
-import '../../components/Scrolling/ScrollingComponent.css';
-
-
+import { User, getUser } from '../../utils/user/users';
+import './mainPage.css';
+import { NavBar } from "../../components/Navbar/NavBar";
+import { useNavigate } from 'react-router-dom';
 
 const MainPage: React.FC = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [userName, setUserName] = useState<string>('');
     const navigate = useNavigate();
-    const [user, setUser] = useState<string>('');
-    useEffect(() => {
-        const fetchData = async () => {
-            await getName();
-        };
-    
-        fetchData();
-    }, []);
+
     const getName = async () => {
+        console.log('Getting name');
         const user = auth.currentUser;
         if (user) {
             await getUser(user.uid).then((user: User) => {
-                setUser(', ' + user.firstname);
-            });       
+                setUserName(', ' + user.firstname);
+            });
         }
     }
+
+    useEffect(() => {
+        console.log(userName);
+        setIsLoading(false);
+    }, [userName]);
+
+    useEffect(() => {
+        if (auth.currentUser) {
+            getName();
+        }
+    });
+
     return (
-        <div>
-            <button onClick={() => navigate('/profile')}>
-            Profile
-            </button>
-            <div className='welcomeText'>
-                <h1>Hey{user}</h1>
-                <p>Welcome to Moviemate</p>
-            </div>
-            <ScrollingComponent />
+        <div className="mainPageContainer">
+            {isLoading ? <h1 className="welcomeText">Loading...</h1> :
+                <div>
+                    <NavBar />
+                    <div className='welcomeText'>
+                        <h1>Hey{userName}</h1>
+                        <p>Welcome to Moviemate</p>
+                    </div>
+                    <ScrollingComponent containerType="default" />
+                </div>
+            }
         </div>
     );
 }

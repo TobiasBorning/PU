@@ -12,6 +12,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/profile",
-    element: <Profile/>,
+    element: <Profile />
   }
 ]);
 
