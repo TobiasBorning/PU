@@ -5,16 +5,11 @@ import { getMovie, Movie } from '../../utils/movieUtils/fetchAndFillDb';
 import { auth } from '../../config/firebase';
 import { addMovieToUser, getUserMovies, isInMyMovies, removeMovieFromUser } from '../../utils/user/users';
 
-
 function ShowMovie() {
     const location = useLocation();
     const movieId = location.state?.number;
     const [movie, setMovie] = useState<Movie>({
         title: 'Loading...',
-    });
-    const [review, setReview] = useState<Review>({
-        rating: 0,
-        comment: '',
     });
     const navigate = useNavigate();
     const [isInList,setIsInList] = useState(false);
