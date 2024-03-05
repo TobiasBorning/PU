@@ -5,6 +5,7 @@ import { User, getUser } from '../../utils/user/users';
 import './mainPage.css';
 import { NavBar } from "../../components/Navbar/NavBar";
 import { useNavigate } from 'react-router-dom';
+import Carousel from "../../components/Carousel/Carousel";
 
 const MainPage: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -41,6 +42,7 @@ const MainPage: React.FC = () => {
                         <h1>Hey{userName}</h1>
                         <p>Welcome to Moviemate</p>
                     </div>
+                    <Carousel movieLimit={10}/>
                     <ScrollingComponent containerType="default" />
                 </div>
             }

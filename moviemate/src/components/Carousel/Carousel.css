@@ -1,0 +1,20 @@
+.scrolling-carousel {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .carousel-container {
+    display: flex;
+    padding: 10px; /* Add some padding to separate the carousel from the edge of the screen */
+  }
+  
+  .carousel-items {
+    display: flex;
+  }
+  
+  .carousel-item {
+    flex: 0 0 auto;
+    margin-right: 20px; /* Adjust as desired */
+    cursor: pointer;
+  }
+  
