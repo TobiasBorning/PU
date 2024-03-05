@@ -8,17 +8,21 @@ import { addMovieToUser, getUserMovies, isInMyMovies, removeMovieFromUser } from
 
 function ShowMovie() {
     const location = useLocation();
-    const number = location.state?.number;
+    const movieId = location.state?.number;
     const [movie, setMovie] = useState<Movie>({
         title: 'Loading...',
+    });
+    const [review, setReview] = useState<Review>({
+        rating: 0,
+        comment: '',
     });
     const navigate = useNavigate();
     const [isInList,setIsInList] = useState(false);
 
     useEffect(() => {
         const fetchMovie = async () => {
-            if (number !== undefined) {
-                const movie = await getMovie(number.toString());
+            if (movieId !== undefined) {
+                const movie = await getMovie(movieId.toString());
                 setMovie(movie);
                 const authUser = auth.currentUser;
                 if (authUser && movie.id) {
@@ -33,7 +37,9 @@ function ShowMovie() {
                 })
             }
         };
-        fetchMovie();
+        if (movie.title === 'Loading...') {
+            fetchMovie();
+        }
     });
 
     const linkUserToMovie = () => {
