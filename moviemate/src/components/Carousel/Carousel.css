@@ -1,20 +1,86 @@
 .scrolling-carousel {
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-  
-  .carousel-container {
-    display: flex;
-    padding: 10px; /* Add some padding to separate the carousel from the edge of the screen */
-  }
-  
-  .carousel-items {
-    display: flex;
-  }
-  
-  .carousel-item {
-    flex: 0 0 auto;
-    margin-right: 20px; /* Adjust as desired */
-    cursor: pointer;
-  }
-  
+  overflow-x: auto;
+  white-space: nowrap;
+  position: relative;
+  scroll-behavior: smooth;
+  max-width: 1032px;
+  height: 500px;
+}
+
+.carousel-container h3 {
+  max-width: 238px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: auto;
+}
+
+.carousel-items {
+  display: flex;
+}
+
+
+.carousel-item {
+  flex: 0 0 auto;
+  margin-right: 12px;
+  margin-left: 12px;
+  padding: 12.5px;
+  border-radius: 10px;
+  background-color: #373737;
+  width: 100%;
+  height: auto;
+  color: #e4b036;
+  cursor: pointer;
+  max-width: 238px;
+  height: 440px;
+  white-space: normal;
+}
+
+.carousel-item:hover {
+  background-color: #565656;
+  color: white;
+}
+
+.carousel-item img {
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  display: block;
+  margin: auto;
+  object-fit: cover;
+  border: transparent 5px solid;
+  border-radius: 15px;
+  filter: sepia(80%);
+}
+
+.nav-button {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  background-color: #333;
+  color: #e4b036;
+  border: none;
+  padding: 30px 15px;
+  cursor: pointer;
+  opacity: 0.7;
+  z-index: 2;
+  font-size: 24px;
+}
+
+.nav-button:hover {
+  opacity: 1;
+  color: white;
+}
+
+.nav-button[disabled] {
+  display: none;
+  /* alternativt, sett opacity til 0.5 og cursor til default hvis du vil at knappene skal vises som deaktivert */
+}
+
+.nav-button.prev {
+  left: 15px;
+}
+
+.nav-button.next {
+  right: 15px;
+}

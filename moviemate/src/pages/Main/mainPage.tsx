@@ -43,6 +43,7 @@ const MainPage: React.FC = () => {
                         <p>Welcome to Moviemate</p>
                     </div>
                     <Carousel movieLimit={10}/>
+                    <br></br>
                     <ScrollingComponent containerType="default" />
                 </div>
             }
