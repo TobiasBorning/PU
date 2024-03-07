@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './ShowMovie.css';
-import { getMovie, Movie } from '../../utils/movieUtils/fetchAndFillDb';
+import { getMovie, Movie, getVideoId } from '../../utils/movieUtils/fetchAndFillDb';
 import { auth } from '../../config/firebase';
 import { addMovieToUser, getUserMovies, isInMyMovies, removeMovieFromUser } from '../../utils/user/users';
-
+import YouTube from 'react-youtube';
 
 function ShowMovie() {
     const location = useLocation();
@@ -14,6 +14,7 @@ function ShowMovie() {
     });
     const navigate = useNavigate();
     const [isInList,setIsInList] = useState(false);
+    const [trailerUrl, setTrailerUrl] = useState<boolean>();
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -26,6 +27,7 @@ function ShowMovie() {
                         setIsInList(contains);
                     });
                 }
+
             }
             else {
                 setMovie({
@@ -56,7 +58,8 @@ function ShowMovie() {
         else {
             linkUserToMovie();
         }
-    }
+    };
+
 
     return (
         <div className='container'>
@@ -73,6 +76,9 @@ function ShowMovie() {
                     {isInList ? 'Remove from my list' : 'Add to my list'}
                 </button>
                 <br />
+                <div>
+                 <YouTube videoId={getVideoId(movie.trailerUrl)} opts={{ width: '560', height: '315' }} />
+                </div>
                 <button onClick={() => navigate('/main')}>Go back</button>
             </div>
         </div>
