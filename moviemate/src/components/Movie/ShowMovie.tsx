@@ -70,6 +70,16 @@ function ShowMovie() {
                 <p>Actors: {movie.actors?.join(", ")}</p>
                 <p>Director: {movie.director}</p>
                 <p>Plot: {movie.plot}</p>
+                {movie.trailerUrl && (
+                    <iframe
+                        width="560"
+                        height="315"
+                        src={movie.trailerUrl}
+                        title="Trailer"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                    ></iframe>
+                )}
                 <img src={movie.posterUrl} alt=''/> 
                 <br />
                 <ReviewMovie />
