@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { getMovies, Movie } from '../../utils/movieUtils/fetchAndFillDb';
 import './Carousel.css';
 import '../Scrolling/ScrollingComponent.css';
+import { getMovieByGenreOr } from '../../utils/searchUtils/searchFunctions';
+import { error } from 'console';
 import Slider from "react-slick";
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
@@ -55,7 +57,29 @@ const Carousel: React.FC<Props> = ({ movieLimit }) => {
     arrows: false
   };
 
+  const selectGenre = (genre: string) => {
+    if (genre){
+      getMovieByGenreOr([genre])
+      .then((filteredMovies) => {
+        const convertedMovies: Movie[] = filteredMovies.map(movie => ({
+          ...movie,
+          posterUrl: movie.posterUrl ? String(movie.posterUrl) : undefined,
+          plot: movie.plot ? String(movie.plot) : undefined
+        }));
+        setMovieList(convertedMovies);
+        setCurrentIndex(0);
+      });
+    }
+    else {
+      getMovies(movieLimit).then((movies) => {
+        setMovieList(movies)
+        setCurrentIndex(0);
+      });
+    }
+  };
+
   return (
+    <div className='mainPageConatiner'>
     <div className="scrolling-carousel">
       <button className="nav-button prev" onClick={handleClickPrevious} disabled={currentIndex === 0}>
         &#10094;
@@ -69,10 +93,11 @@ const Carousel: React.FC<Props> = ({ movieLimit }) => {
           </div>
         ))}
       </Slider>
-
+      <button onClick={() => selectGenre("Action")}>Filter Action</button>
       <button className="nav-button next" onClick={handleClickNext} disabled={currentIndex === movieList.length - 1}>
         &#10095;
       </button>
+    </div>
     </div>
   );
 }
