@@ -1,4 +1,13 @@
+.mainPageContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(238px, 1fr));
+  gap: 20px;
+  justify-content: center;
+  padding: 50px 0;
+}
+
 .scrolling-carousel {
+  margin: auto;
     overflow-x: auto;
     white-space: nowrap;
   }
@@ -10,6 +19,14 @@
   
   .carousel-items {
     display: flex;
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    margin: auto;
+    object-fit: cover;
+    border: transparent 5px solid;
+    border-radius: 15px;
+    filter: sepia(80%);
   }
   
   .carousel-item {
@@ -17,4 +34,5 @@
     margin-right: 20px; /* Adjust as desired */
     cursor: pointer;
   }
+
   
