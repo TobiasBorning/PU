@@ -4,10 +4,13 @@
   position: relative;
   scroll-behavior: smooth;
   max-width: 1032px;
-  height: 500px;
+  height: 460px;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  overflow-y: hidden;
 }
 
-.carousel-container h3 {
+.scrolling-carousel h3 {
   max-width: 238px;
   overflow: hidden;
   white-space: nowrap;
@@ -19,11 +22,8 @@
   display: flex;
 }
 
-
 .carousel-item {
   flex: 0 0 auto;
-  margin-right: 12px;
-  margin-left: 12px;
   padding: 12.5px;
   border-radius: 10px;
   background-color: #373737;
@@ -31,9 +31,10 @@
   height: auto;
   color: #e4b036;
   cursor: pointer;
-  max-width: 238px;
+  max-width: 249px;
   height: 440px;
   white-space: normal;
+  cursor: pointer;
 }
 
 .carousel-item:hover {
@@ -53,18 +54,23 @@
   filter: sepia(80%);
 }
 
+.carousel-item:hover img {
+  filter: grayscale(0%);
+}
+
 .nav-button {
   position: absolute;
-  top: 40%;
+  top: 48%;
   transform: translateY(-50%);
   background-color: #333;
   color: #e4b036;
   border: none;
-  padding: 30px 15px;
+  padding: 20px 10px;
   cursor: pointer;
   opacity: 0.7;
   z-index: 2;
   font-size: 24px;
+  cursor: pointer;
 }
 
 .nav-button:hover {
@@ -72,15 +78,10 @@
   color: white;
 }
 
-.nav-button[disabled] {
-  display: none;
-  /* alternativt, sett opacity til 0.5 og cursor til default hvis du vil at knappene skal vises som deaktivert */
-}
-
 .nav-button.prev {
-  left: 15px;
+  left: 9px;
 }
 
 .nav-button.next {
-  right: 15px;
+  right: 17px;
 }

@@ -41,10 +41,18 @@ const MainPage: React.FC = () => {
                     <div className='welcomeText'>
                         <h1>Hey{userName}</h1>
                         <p>Welcome to Moviemate</p>
+                        <br></br>
                     </div>
-                    <Carousel movieLimit={10}/>
-                    <br></br>
-                    <ScrollingComponent containerType="default" />
+                    <h2>Comedy</h2>
+                    <Carousel movieLimit={10} genre="Comedy" />
+                    <h2>Action</h2>
+                    <Carousel movieLimit={10} genre="Action" />
+                    <h2>Family</h2>
+                    <Carousel movieLimit={10} genre="Family" />
+                    <h2>Drama</h2>
+                    <Carousel movieLimit={10} genre="Drama" />
+                    <h2>Romance</h2>
+                    <Carousel movieLimit={10} genre="Romance" />
                 </div>
             }
         </div>
