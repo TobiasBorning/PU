@@ -45,3 +45,8 @@
     border-radius: 15px;
     filter: sepia(80%);
 }
+
+#load {
+    margin: 0;
+    margin-bottom: 20px;
+}

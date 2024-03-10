@@ -11,22 +11,10 @@ export const NavBar: React.FC = () => {
 
     return (
         <nav className="nav">
-            <p className="site-title" onClick={ () => navigate("/main") } >MovieMate</p>
+            <p className="site-title" onClick={() => navigate("/main")}>MovieMate</p>
             <ul>
-                <p className="navBarElements" onClick={ () => {navigate("/profile")}}>My profile</p>
-                <p className="navBarElements">Filter</p>
-                {isSearchActive ? (
-                    <input
-                        type="text"
-                        className="searchInput active"
-                        placeholder="Search movies..."
-                        onBlur={toggleSearch}
-                    />
-                ) : (
-                    <p className="navBarElements" onClick={toggleSearch}>
-                        Search
-                    </p>
-                )}
+                <p className="navBarElements" onClick={() => navigate("/profile")}>My profile</p>
+                <p className="navBarElements" onClick={() => navigate("/search")}>Advanced search</p>
             </ul>
         </nav>
     );

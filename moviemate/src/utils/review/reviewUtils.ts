@@ -33,7 +33,9 @@ export const reviewMovie = async (userId: string, movieId: string, rating: numbe
         throw new Error("Rating must be between 1 and 5");
     }
     try {
+        console.log("Adding review to movie: ", movieId, " with rating: ", rating, " and comment: ", comment)
         const movieReviewDoc = doc(db, 'movieReview', userId + movieId); // Unique ID for the review, calling the function again will overwrite the review
+        console.log("MovieReview ID: "+ userId+movieId)
         await setDoc(movieReviewDoc, {
             uid: userId,
             movieId: movieId,
