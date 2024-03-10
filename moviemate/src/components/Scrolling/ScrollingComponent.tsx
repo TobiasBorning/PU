@@ -50,7 +50,8 @@ const ScrollingComponent: React.FC<Props> = (props) =>{
     }
 
     const fillAllMovies = () => {
-        if (movieList.length === 0) {
+        console.log("Fill with all movies");
+        if (movieList.length >= 0) {
             console.log(getMovies(movieCount));
             getMovies(movieCount).then((movies) => {
                 console.log(movies);
@@ -61,6 +62,7 @@ const ScrollingComponent: React.FC<Props> = (props) =>{
     }
 
     const fillWithUsersMovies = async () => {
+        console.log("Fill with user movies");
         if (props.uid) {
             console.log(getUserMovies(props.uid));
             getUserMovies(props.uid).then((movies : Movie[]) => {
@@ -86,7 +88,7 @@ const ScrollingComponent: React.FC<Props> = (props) =>{
     const increaseMovieCount = () => {
         setMovieCount(movieCount + 20);
         console.log(movieCount);
-        fillContainer();
+        chooseFill();
     }
 
     return (
