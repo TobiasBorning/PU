@@ -8,7 +8,7 @@
 
 .container {
     background-color: #373737;
-    margin-top: 90px;
+    margin-top: 100px;
 }
 
 .movieInfo button {
@@ -26,9 +26,9 @@
 }
 
 .star {
-    color: #ffc107; /* Farge på stjernene når de er valgt */
-  }
+    color: #ffc107;
+}
 
-  input[type = radio]{
+input[type=radio] {
     display: none;
-  }
+}

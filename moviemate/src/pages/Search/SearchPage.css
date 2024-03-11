@@ -1,0 +1,18 @@
+.searchInput {
+    display: none;
+    padding: 6px;
+    margin-bottom: 20px;
+    border: 1px solid #e4b036;
+    background-color: #373737;
+    color: #e4b036;
+    border-radius: 10px;
+    outline: none;
+}
+
+.searchInput {
+    display: block;
+}
+
+.searchPageContainer {
+    margin-top: 100px;
+}
