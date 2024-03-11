@@ -25,7 +25,7 @@ export interface Movie{
 }
 
 // general search functions, all return arrays of movie Structs
-async function getMovieByGenreStrict(genreArray: string[]){
+async function getMovieByGenreAnd(genreArray: string[]){
     // todo: error handeling
     var returnArray: Array<Movie>;
     returnArray = [];
@@ -33,13 +33,13 @@ async function getMovieByGenreStrict(genreArray: string[]){
     
     const document = await getDocs(q);
     document.docs.forEach((doc) => {
-        const movie: Movie = {actors: doc.data().actors, id: doc.data().id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors};
+        const movie: Movie = {actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl};
         returnArray.push(movie);
         
     });
     return returnArray;
 }
-export async function getMovieByGenreSoft(genreArray: string[]){
+export async function getMovieByGenreOr(genreArray: string[]){
     // todo: error handeling
     var returnArray: Array<Movie>;
     returnArray = [];
@@ -47,9 +47,8 @@ export async function getMovieByGenreSoft(genreArray: string[]){
     
     const document = await getDocs(q);
     document.docs.forEach((doc) => {
-        const movie: Movie = {actors: doc.data().actors, id: doc.data().id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors};
+        const movie: Movie = {actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl};
         returnArray.push(movie);
-        
     });
     return returnArray;
 }
@@ -62,7 +61,7 @@ export async function getMovieByLengthLess(length: number){
     
     const document = await getDocs(q);
     document.docs.forEach((doc) => {
-        const movie: Movie = {actors: doc.data().actors, id: doc.data().id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors};
+        const movie: Movie = {actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl};
         returnArray.push(movie);
         
     });
@@ -77,7 +76,7 @@ export async function getMovieByLengthGreat(length: number){
     
     const document = await getDocs(q);
     document.docs.forEach((doc) => {
-        const movie: Movie = {actors: doc.data().actors, id: doc.data().id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors};
+        const movie: Movie = {actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl};
         returnArray.push(movie);
         
     });
@@ -91,7 +90,7 @@ export async function getMovieByDirectorStrict(directorArray: [String]){
     
     const document = await getDocs(q);
     document.docs.forEach((doc) => {
-        const movie: Movie = {actors: doc.data().actors, id: doc.data().id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors};
+        const movie: Movie = {actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl};
         returnArray.push(movie);
         
     });
@@ -105,7 +104,7 @@ export async function getMovieByDirectorSoft(directorArray: [String]){
     
     const document = await getDocs(q);
     document.docs.forEach((doc) => {
-        const movie: Movie = {actors: doc.data().actors, id: doc.data().id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors};
+        const movie: Movie = {actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl};
         returnArray.push(movie);
         
     });
@@ -142,7 +141,7 @@ export async function getMovieByName(name: string){
     const documents = await getDocs(q);
     documents.docs.forEach((doc) => {
         if(doc.data().title.match(new RegExp(name))){
-        const movie: Movie = {actors: doc.data().actors, id: doc.data().id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors};
+        const movie: Movie = {actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors};
         returnArray.push(movie);
         }                                                 
     });

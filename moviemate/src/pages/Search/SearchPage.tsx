@@ -41,10 +41,6 @@ const SearchPage: React.FC = () => {
     return (
                 <div className="searchPageContainer">
                     <NavBar />
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
                     <input 
                         type="text"
                         className="searchInput"
