@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './ShowMovie.css';
-import { getMovie, Movie, getVideoId } from '../../utils/movieUtils/fetchAndFillDb';
+import { getMovie, Movie } from '../../utils/movieUtils/fetchAndFillDb';
 import { auth } from '../../config/firebase';
 import { addMovieToUser, getUserMovies, isInMyMovies, removeMovieFromUser } from '../../utils/user/users';
 import YouTube from 'react-youtube';
@@ -14,7 +14,8 @@ function ShowMovie() {
     });
     const navigate = useNavigate();
     const [isInList,setIsInList] = useState(false);
-    const [trailerUrl, setTrailerUrl] = useState<boolean>();
+    const [trailerId, setTrailerId] = useState<string>('');
+
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -27,7 +28,13 @@ function ShowMovie() {
                         setIsInList(contains);
                     });
                 }
-
+                if (movie.trailerUrl) {
+                    const urlParams = new URLSearchParams(movie.trailerUrl.split('?')[1]);
+                    const videoId = urlParams.get('v');
+                    if (videoId) {
+                        setTrailerId(videoId);
+                    }
+                }
             }
             else {
                 setMovie({
@@ -75,10 +82,9 @@ function ShowMovie() {
                 <button onClick={() => addOrRemove()}>
                     {isInList ? 'Remove from my list' : 'Add to my list'}
                 </button>
+                <p>Trailer URL: {movie.trailerUrl}</p>
                 <br />
-                <div>
-                 <YouTube videoId={getVideoId(movie.trailerUrl)} opts={{ width: '560', height: '315' }} />
-                </div>
+                 <YouTube videoId={trailerId} opts={{ width: '400', height: '275' }} />
                 <button onClick={() => navigate('/main')}>Go back</button>
             </div>
         </div>
@@ -86,3 +92,7 @@ function ShowMovie() {
 }
 
 export default ShowMovie;
+
+function setTrailerId(videoId: string) {
+    throw new Error('Function not implemented.');
+}

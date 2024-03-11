@@ -1,6 +1,8 @@
 import { db } from '../../config/firebase';
 import { collection, query, limit, doc, getDoc, setDoc, getDocs } from 'firebase/firestore';
 import data from './db.json';
+import { URLSearchParams } from 'url';
+import { useState } from 'react';
 
 export interface Movie {
     id?: string;
@@ -58,18 +60,8 @@ const parseYear = (year: string) : number => {
 }
 const parseId = (id: number) : string => {
     return id.toString();
-}
-export const getVideoId = (trailerUrl: string): string => {
-    // Extract video ID from YouTube URL
-    const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-    const match = trailerUrl.match(regex);
-    if (match && match[1]) {
-      return match[1];
-    } else {
-      console.error('Invalid YouTube URL:', trailerUrl);
-      return '';
 
-    }
+    
   };
 
 export const fillDbWithMovies = async (movies: Movie[]) => {
@@ -86,6 +78,7 @@ export const fillDbWithMovies = async (movies: Movie[]) => {
                     trailerUrl: movie.trailerUrl,
                     director: movie.director,
                     plot: movie.plot
+
                 }); 
             }
             catch (e) {
