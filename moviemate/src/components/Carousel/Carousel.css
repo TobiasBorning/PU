@@ -15,7 +15,6 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  overflow-x: auto;
 }
 
 .carousel-items {
