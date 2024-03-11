@@ -5,11 +5,13 @@ import Login from './pages/Login/Login';
 import SignUp from './pages/SignUp/SignUp';
 import Movie from './pages/Movie/Movie';
 import MainPage from './pages/Main/mainPage';
+import Profile from './pages/Profile/Profile';
 
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+
 
 const router = createBrowserRouter([
   {
@@ -31,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: "/movie",
     element: <Movie/>,
+  },
+  {
+    path: "/profile",
+    element: <Profile />
   }
 ]);
 

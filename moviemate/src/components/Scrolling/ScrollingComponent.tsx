@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ScrollingComponent.css';
 import { getMovies, Movie } from '../../utils/movieUtils/fetchAndFillDb';
+import { getUserMovies } from '../../utils/user/users';
+
 
 type Props = { 
    containerType: string;
@@ -53,10 +55,38 @@ const ScrollingComponent: React.FC<Props> = (props) =>{
         setBoxArray(b);
     }
 
-    
-    const fillContainer = () => {
-        if (props.containerType === 'default') {
-            fillContainerDefault();
+    const fillAllMovies = () => {
+        console.log("Fill with all movies");
+        if (movieList.length >= 0) {
+            console.log(getMovies(movieCount));
+            getMovies(movieCount).then((movies) => {
+                console.log(movies);
+                setMovieList(movies);
+                fillContainer();
+            });
+        }
+    }
+
+    const fillWithUsersMovies = async () => {
+        console.log("Fill with user movies");
+        if (props.uid) {
+            console.log(getUserMovies(props.uid));
+            getUserMovies(props.uid).then((movies : Movie[]) => {
+                console.log(movies);
+                setMovieList(movies);
+                fillContainer();
+            }).catch((error) => {
+                console.error('Error getting user movies:', error);
+            });
+        }
+    }
+
+    const chooseFill = () => {
+        if (props.containerType === "default") {
+            fillAllMovies();
+        }
+        if (props.containerType === "userList") {
+            fillWithUsersMovies();
         }
     }
 
@@ -66,10 +96,7 @@ const ScrollingComponent: React.FC<Props> = (props) =>{
     const increaseMovieCount = () => {
         setMovieCount(movieCount + 20);
         console.log(movieCount);
-        getMovies(movieCount).then((movies) => {
-            setMovieList(movies);   
-        });
-        fillContainer();
+        chooseFill();
     }
 
     return (

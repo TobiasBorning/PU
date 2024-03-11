@@ -1,0 +1,11 @@
+.commentField {
+    width: 300px;
+    height: 150px;
+    margin-top: 10px;
+    padding: 6px;
+    border: 1px solid #e4b036;
+    background-color: #373737;
+    color: #e4b036;
+    border-radius: 10px;
+    outline: none;
+}

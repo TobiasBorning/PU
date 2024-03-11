@@ -4,11 +4,12 @@ import './ShowMovie.css';
 import { getMovie, Movie } from '../../utils/movieUtils/fetchAndFillDb';
 import { auth } from '../../config/firebase';
 import { addMovieToUser, getUserMovies, isInMyMovies, removeMovieFromUser } from '../../utils/user/users';
-import YouTube from 'react-youtube';
+import Youtube from 'react-youtube'
+
 
 function ShowMovie() {
     const location = useLocation();
-    const number = location.state?.number;
+    const movieId = location.state?.number;
     const [movie, setMovie] = useState<Movie>({
         title: 'Loading...',
     });
@@ -19,8 +20,8 @@ function ShowMovie() {
 
     useEffect(() => {
         const fetchMovie = async () => {
-            if (number !== undefined) {
-                const movie = await getMovie(number.toString());
+            if (movieId !== undefined) {
+                const movie = await getMovie(movieId.toString());
                 setMovie(movie);
                 const authUser = auth.currentUser;
                 if (authUser && movie.id) {
@@ -42,9 +43,11 @@ function ShowMovie() {
                 })
             }
         };
-        fetchMovie();
+        if (movie.title === 'Loading...') {
+            fetchMovie();
+        }
     });
-
+    
     const linkUserToMovie = () => {
         const authUser = auth.currentUser;
         if (authUser && movie.id) {
@@ -65,8 +68,8 @@ function ShowMovie() {
         else {
             linkUserToMovie();
         }
-    };
-
+        setIsInList(!isInList);
+    }
 
     return (
         <div className='container'>
@@ -77,8 +80,19 @@ function ShowMovie() {
                 <p>Actors: {movie.actors?.join(", ")}</p>
                 <p>Director: {movie.director}</p>
                 <p>Plot: {movie.plot}</p>
-                <img src={movie.posterUrl} alt='' />
+                {movie.trailerUrl && (
+                    <iframe
+                        width="560"
+                        height="315"
+                        src={movie.trailerUrl}
+                        title="Trailer"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                    ></iframe>
+                )}
+                <img src={movie.posterUrl} alt=''/> 
                 <br />
+                <ReviewMovie />
                 <button onClick={() => addOrRemove()}>
                     {isInList ? 'Remove from my list' : 'Add to my list'}
                 </button>
