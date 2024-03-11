@@ -8,7 +8,7 @@ import { Movie } from "../common/interfaces";
 // these functions return lists of movies or users sorted by spesific parameters. F.eks get movies with genre 
 
 // general search functions, all return arrays of movie Structs
-async function getMovieByGenreStrict(genreArray: string[]){
+async function getMovieByGenreAnd(genreArray: string[]){
     // todo: error handeling
     var returnArray: Array<Movie>;
     returnArray = [];
@@ -16,13 +16,13 @@ async function getMovieByGenreStrict(genreArray: string[]){
     
     const document = await getDocs(q);
     document.docs.forEach((doc) => {
-        const movie: Movie = {actors: doc.data().actors, id: doc.data().id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors};
+        const movie: Movie = {actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl};
         returnArray.push(movie);
         
     });
     return returnArray;
 }
-export async function getMovieByGenreSoft(genreArray: string[]){
+export async function getMovieByGenreOr(genreArray: string[]){
     // todo: error handeling
     var returnArray: Array<Movie>;
     returnArray = [];
@@ -30,9 +30,8 @@ export async function getMovieByGenreSoft(genreArray: string[]){
     
     const document = await getDocs(q);
     document.docs.forEach((doc) => {
-        const movie: Movie = {actors: doc.data().actors, id: doc.data().id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors};
+        const movie: Movie = {actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl};
         returnArray.push(movie);
-        
     });
     return returnArray;
 }
@@ -74,13 +73,28 @@ export async function getByLength(length: number, operator: string){
     const q = query(collection(db, 'movies'), where('length', operator as WhereFilterOp, length));
     const document = await getDocs(q);
     document.docs.forEach((doc) => {
-        const movie: Movie = {actors: doc.data().actors, id: doc.data().id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors};
+        const movie: Movie = {actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl};
         returnArray.push(movie);
         
     });
     return returnArray;
 }
-async function getMovieByDirectorAnd(directorArray: [String]){
+export async function getMovieByLengthGreat(length: number){
+    //todo: search movie by length in minutes?
+    // todo: add movielength to db 
+    var returnArray: Array<Movie>;
+    returnArray = [];
+    const q = query(collection(db, 'movies'), where('length', '>=', length));
+    
+    const document = await getDocs(q);
+    document.docs.forEach((doc) => {
+        const movie: Movie = {actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl};
+        returnArray.push(movie);
+        
+    });
+    return returnArray;
+}
+export async function getMovieByDirectorStrict(directorArray: [String]){
     // todo: gets all movies made by these directors by logical and
     var returnArray: Array<Movie>;
     returnArray = [];
@@ -88,7 +102,7 @@ async function getMovieByDirectorAnd(directorArray: [String]){
     
     const document = await getDocs(q);
     document.docs.forEach((doc) => {
-        const movie: Movie = {actors: doc.data().actors, id: doc.data().id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors};
+        const movie: Movie = {actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl};
         returnArray.push(movie);
         
     });
@@ -103,7 +117,7 @@ async function getMovieByDirectorOr(directorArray: string[]){
     
     const document = await getDocs(q);
     document.docs.forEach((doc) => {
-        const movie: Movie = {actors: doc.data().actors, id: doc.data().id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors};
+        const movie: Movie = {actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl};
         returnArray.push(movie);
         
     });
