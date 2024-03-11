@@ -31,7 +31,6 @@ export const convertToMovies = () => {
             genres: parseGenres(movie.genres),
             posterUrl: movie.posterUrl,
             trailerUrl: movie.trailerUrl,
-            trailerUrl: movie.trailerUrl,
             director: parseDirector(movie.director),
             plot: movie.plot
         }
@@ -76,7 +75,6 @@ export const fillDbWithMovies = async (movies: Movie[]) => {
                     actors: movie.actors,
                     genres: movie.genres,
                     posterUrl: movie.posterUrl,
-                    trailerUrl: movie.trailerUrl,
                     trailerUrl: movie.trailerUrl,
                     director: movie.director,
                     plot: movie.plot
@@ -126,7 +124,6 @@ export const getMovies = async (movieCount: number) : Promise<Movie[]> => {
             actors: data.actors,
             genres: data.genres,
             posterUrl: data.posterUrl,
-            trailerUrl: data.trailerUrl,
             trailerUrl: data.trailerUrl,
             director: data.director,
             plot: data.plot

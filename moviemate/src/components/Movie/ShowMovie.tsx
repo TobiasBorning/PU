@@ -3,7 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './ShowMovie.css';
 import { getMovie, Movie } from '../../utils/movieUtils/fetchAndFillDb';
 import { auth } from '../../config/firebase';
-import { addMovieToUser, getUserMovies, isInMyMovies, removeMovieFromUser } from '../../utils/user/users';
+import { addMovieToUser, isInMyMovies, removeMovieFromUser } from '../../utils/user/users';
+import { Review } from '../../utils/review/reviewUtils';
 import Youtube from 'react-youtube'
 
 
@@ -92,7 +93,7 @@ function ShowMovie() {
                 )}
                 <img src={movie.posterUrl} alt=''/> 
                 <br />
-                <ReviewMovie />
+                <Review />
                 <button onClick={() => addOrRemove()}>
                     {isInList ? 'Remove from my list' : 'Add to my list'}
                 </button>
@@ -107,6 +108,4 @@ function ShowMovie() {
 
 export default ShowMovie;
 
-function setTrailerId(videoId: string) {
-    throw new Error('Function not implemented.');
-}
+
