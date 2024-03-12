@@ -5,6 +5,7 @@ import { getMovie, Movie } from '../../utils/movieUtils/fetchAndFillDb';
 import { auth } from '../../config/firebase';
 import { addMovieToUser, isInMyMovies, removeMovieFromUser } from '../../utils/user/users';
 import ReviewMovie from './ReviewMovie';
+import GenresAndDirectorsButtons from './GenresAndDirectorsButtons';
 
 function ShowMovie() {
     const location = useLocation();
@@ -66,9 +67,8 @@ function ShowMovie() {
             <div className='movieInfo'>
                 <h1> {movie.title}</h1>
                 <p>Year: {movie.year}</p>
-                <p>Genres: {movie.genres?.join(", ")}</p>
                 <p>Actors: {movie.actors?.join(", ")}</p>
-                <p>Director: {movie.director}</p>
+                <GenresAndDirectorsButtons movieId={movieId} />
                 <p>Plot: {movie.plot}</p>
                 <img src={movie.posterUrl} alt=''/> 
                 <br />
