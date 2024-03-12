@@ -3,11 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import './ScrollingComponent.css';
 import { getMovies, Movie } from '../../utils/movieUtils/fetchAndFillDb';
 import { getUserMovies } from '../../utils/user/users';
+import { getMovieByName } from '../../utils/searchUtils/searchFunctions';
 
 
 type Props = { 
    containerType: string;
    uid?: string;
+   searchQuery?: string; // Legg til søkestrengen som et valgfritt props
+
 }
 
 const ScrollingComponent: React.FC<Props> = (props) =>{
@@ -21,6 +24,24 @@ const ScrollingComponent: React.FC<Props> = (props) =>{
     useEffect(() => {
         chooseFill();
     }, [movieCount]);
+
+    useEffect(() => {
+        if (props.searchQuery) {
+            searchMovies(props.searchQuery);
+        } else {
+            chooseFill();
+        }
+    }, [props.searchQuery]);
+
+    const searchMovies = (query: string) => {
+        // Implementer søkefunksjonalitet basert på tittel eller regissør
+        getMovieByName(query).then((movies: Movie[]) => {
+            setMovieList(movies);
+            fillContainer();
+        }).catch((error) => {
+            console.error('Error searching movies:', error);
+        });
+    }
 
     // fyller container med filmer når filmene er hentet
     useEffect(() => {

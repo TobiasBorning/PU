@@ -2,7 +2,7 @@ import { title } from "process";
 import { Interface } from "readline";
 import { db } from "../../config/firebase";
 import { collection, getDoc, getDocs, query, where, doc } from "firebase/firestore";
-import Movie from "../../pages/Movie/Movie";
+import MovieP from "../../pages/Movie/Movie";
 import { get } from "http";
 // these functions return lists of movies or users sorted by spesific parameters. F.eks get movies with genre 
 
@@ -20,8 +20,8 @@ export interface Movie{
     director: [];
 
     // Plot and posterURL is not used in searches, but shoul be required for return values as they are needed for app functionality.
-    posterUrl?: String;
-    plot?: String;
+    posterUrl?: string;
+    plot?: string;
 }
 
 // general search functions, all return arrays of movie Structs
@@ -100,7 +100,7 @@ export async function getMovieByDirectorSoft(directorArray: [String]){
     // todo: gets all movies made by these directors by logical or
     var returnArray: Array<Movie>;
     returnArray = [];
-    const q = query(collection(db, 'movies'), where('genres', 'array-contains-any', directorArray));
+    const q = query(collection(db, 'movies'), where('director', 'array-contains-any', directorArray));
     
     const document = await getDocs(q);
     document.docs.forEach((doc) => {
