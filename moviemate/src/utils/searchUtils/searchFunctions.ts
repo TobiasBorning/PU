@@ -1,10 +1,11 @@
 import { title } from "process";
 import { Interface } from "readline";
 import { db } from "../../config/firebase";
-import { collection, getDoc, getDocs, query, where, doc, WhereFilterOp, updateDoc } from "firebase/firestore";
+import { collection, getDoc, getDocs, query, where, doc, WhereFilterOp, updateDoc, setDoc, Firestore, getAggregateFromServer, sum, average } from "firebase/firestore";
 import { get } from "http";
 import { idText } from "typescript";
 import { Movie } from "../common/interfaces";
+import { count } from "console";
 // these functions return lists of movies or users sorted by spesific parameters. F.eks get movies with genre 
 
 // general search functions, all return arrays of movie Structs
@@ -155,17 +156,33 @@ export function sortAlphabetical(movieArray: [Movie], reverse: boolean){
 //     // todo: sort by score attribute
 //     return movieArray.sort(compareRating)
 // }
-function avreageAdd(a: number, b:number, aN:number, bN: number){
-    return (a*aN+b*bN)/(aN+bN)
+
+
+// custom sort function for movies
+function sortScore(movie1: Movie, movie2: Movie){
+    if(movie1.avrgScore&&movie2.avrgScore){
+        return movie1.avrgScore - movie2.avrgScore
+    }
+    else{
+        return 0
+    }
 }
-export async function getMovieScore(){
-    const q = collection(db, 'movies');
-    // let hashMap = new Map<string, Array<number>>();
-    const documents = await getDocs(q);
-    documents.forEach((doc) => {
-        updateDoc(doc.ref, {averageRating: 0, ratings: 0})
-    });
+// implementtion of sort functions
+export async  function sortByScore(movies: Array<Movie>){
+    const coll = collection(db, 'moveReview')
+    for (let index = 0; index < movies.length; index++) {
+        const element = movies[index];
+        const q = query(coll, where('moviedId', '==', element.id))
+        const aggregate = await getAggregateFromServer(q, {
+            totalScore: average('rating')
+        });
+        movies[index].avrgScore = aggregate.data().totalScore
+    }
+
+    return movies.sort(sortScore)
+
 }
+
 export async function getMovieByName(name: string, movieArray?: Array<Movie>){
     // TODO: need to find some way to get the movies by name, may be a dumb solution.
     // ffs firebase supports querying the first and last words of a string. The solution is don't use firebase. 
