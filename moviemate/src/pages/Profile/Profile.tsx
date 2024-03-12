@@ -9,30 +9,54 @@ import { NavBar } from '../../components/Navbar/NavBar';
 
 
 const Profile: React.FC = () => {
-    const [user, setUser] = useState<string>('');
+    const [firstName, setFirstName] = useState<string>('');
+    const [lastName, setLastName] = useState<string>('');
+    const [Email, setEmail] = useState<string>('');
+    const [userInformation, setUserInformation] = useState<boolean>();
 
     useEffect(() => {
         if (auth.currentUser) {
-            getName();
+            getProfileInformation();
         }
     }, []);
 
-    const getName = async () => {
+    const getProfileInformation = async () => {
         const user = auth.currentUser;
         console.log(user?.uid);
         if (user) {
             await getUser(user.uid).then((user: User) => {
-                setUser(', ' + user.firstname);
+                setFirstName(user.firstname);
+                setLastName(user.lastname);
+                setEmail(user.email);
             });       
         }
     }
+
+    
+    const getUserInformation = () => {
+        setUserInformation(!userInformation);
+    }
+
+
     return (
         <div className="mainPageContainer">
             <div>
                 <NavBar/>
                 <div className='welcomeText'>
-                    <h1>Welcome to your personal page{user}</h1>
-                    <p>Your saved movies</p>
+                    <h1>Welcome to your personal page, {firstName}</h1>
+                    <div className='userInformation'>
+                    <button onClick={getUserInformation}>
+                        {userInformation ? 'Hide User Information' : 'Show User Information'}
+                        </button>
+                        {userInformation && (
+                            <>
+                                <p>Your Firstname: {firstName}</p>
+                                <p>Your Lastname: {lastName}</p>
+                                <p>Your Email: {Email}</p>
+                            </>
+                        )}
+                    </div>
+                    <h3>Your saved movies</h3>
                 </div>
                 {auth.currentUser ? <ScrollingComponent containerType="userList" uid={auth.currentUser.uid} /> : <p>Cant find user</p>}
             </div>
