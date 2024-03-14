@@ -110,7 +110,7 @@ const ScrollingComponent: React.FC<Props> = (props) => {
                 if (props.selectedGenres && props.selectedGenres.length > 0) {
                     selectGenre();
                 } else {
-                    fillAllMovies(); 
+                    fillAllMovies();
                 }
                 break;
         }

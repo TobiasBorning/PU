@@ -11,8 +11,8 @@ export interface Movie{
     director: [];
 
     // Plot and posterURL is not used in searches, but shoul be required for return values as they are needed for app functionality.
-    posterUrl?: String;
-    plot?: String;
+    posterUrl?: string;
+    plot?: string;
 
     // average score to be used when sorting movies
     avrgScore?: number|null
