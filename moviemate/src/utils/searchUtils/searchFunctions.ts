@@ -125,7 +125,7 @@ export async function getMovieByDirectorSoft(directorArray: string[]) {
     });
     return returnArray;
 }
-export async function getMovieByDirector(name:string, movieArray?: Array<Movie>) {
+export async function getMovieByDirector(name:string[], movieArray?: Array<Movie>) {
     
     var directorArray: Array<string>
     directorArray = [];
