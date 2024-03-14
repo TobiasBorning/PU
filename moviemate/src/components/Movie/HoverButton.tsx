@@ -11,22 +11,30 @@ type Props = {
 const HoverButton: React.FC<Props> = ({text, type}) =>{
   const [isHovered, setIsHovered] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const user = auth.currentUser
 
   useEffect(() => {
-    const user = auth.currentUser
+    checkFavorite();
+  },[user]);
+
+
+  const checkFavorite = async () => {
     if (user && text) {
       if (type === 'genre') {
-        isFavoriteGenre(user.uid, text).then((isFav) => {
-          setIsFavorite(isFav)
-        })
+        const favorite = await isFavoriteGenre(user.uid, text);
+        if (favorite !== isFavorite) {
+          setIsFavorite(favorite);
+        }
       }
       else if (type === 'director'){
-        isFavoriteDirector(user.uid, text).then((isFav) => {
-          setIsFavorite(isFav)
-        })
+        const favorite = await isFavoriteDirector(user.uid, text);
+        if (favorite !== isFavorite) {
+          setIsFavorite(favorite);
+        }
       }
     }
-  },[auth]);
+  }
+
   //TODO: Add functionality to add to favourites to database
   //TODO: Add functionality to mark allready favorited directors or genres. Needs util funciton
   const setFavorite = () => {
@@ -41,6 +49,7 @@ const HoverButton: React.FC<Props> = ({text, type}) =>{
         console.log("added favorite director")
       }
     }    
+    setIsFavorite(!isFavorite);
   }
 
   const setUnFavorite = () => {
@@ -57,6 +66,7 @@ const HoverButton: React.FC<Props> = ({text, type}) =>{
         setIsFavorite(false);
       }
     }
+    setIsFavorite(!isFavorite);
   }
 
   return (
@@ -65,7 +75,7 @@ const HoverButton: React.FC<Props> = ({text, type}) =>{
       onMouseEnter={() => setIsHovered(true)}
       onClick={() => (isFavorite ? setUnFavorite() : setFavorite())}
       onMouseLeave={() => setIsHovered(false)}
-      style={{backgroundColor: isFavorite ? 'green' : 'white'}}
+      style={{backgroundColor: isFavorite ? '#e4b036' : 'white'}}
     >
       {isHovered ? (isFavorite ? 'Ufavorite' : 'Favorite') : text}
     </button>

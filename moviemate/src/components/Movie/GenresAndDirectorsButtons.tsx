@@ -1,28 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { Movie, getMovie } from '../../utils/movieUtils/fetchAndFillDb';
 import HoverButton from './HoverButton';
-
+import './GenresAndDirectorsButtons.css';
 interface Props {
     movieId: number; // replace 'any' with the type of your prop
 }
 
 const GenresAndDirectorsButtons: React.FC<Props> = ({ movieId }) => {
 
-    const [movie, setMovie] = useState<Movie>();
     const [directors, setDirectors] = useState<JSX.Element[]>([]);
     const [genres, setGenres] = useState<JSX.Element[]>([]);
 
     useEffect(() => {
         // Your code here
-        getMovie(movieId.toString()).then((movie) => {
-            setMovie(movie);
-        });
-        makeDirectorButtons();
-        makeGenreButtons();
-    });
+        const fetchMovie = async () => {
+            console.log("Making buttons")
+            getMovie(movieId.toString()).then((movie) => {
+                makeDirectorButtons(movie);
+                makeGenreButtons(movie);
+            });
+            
+        }
+        fetchMovie();
+    },[movieId]);
 
 
-    const makeDirectorButtons = () => {
+    const makeDirectorButtons = (movie : Movie) => {
         if (movie && movie.director) {
             setDirectors(movie.director.map((director) => {
                 return (
@@ -32,7 +35,7 @@ const GenresAndDirectorsButtons: React.FC<Props> = ({ movieId }) => {
         }       
     }
 
-    const makeGenreButtons = () => {
+    const makeGenreButtons = (movie : Movie) => {
         if (movie && movie.genres) {
             setGenres(movie.genres.map((genres) => {
                 return (
@@ -44,9 +47,11 @@ const GenresAndDirectorsButtons: React.FC<Props> = ({ movieId }) => {
 
 
     return (
-        <div>
-            <p>Director: {directors}</p>
-            <p>Genres: {genres}</p>
+        <div className='gnd'>
+            <p>Director</p>
+            {directors}
+            <p>Genres:</p>
+            {genres}
         </div>
     );
 }

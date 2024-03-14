@@ -18,6 +18,7 @@ function ShowMovie() {
 
     useEffect(() => {
         const fetchMovie = async () => {
+            console.log("Fetching movie")
             if (movieId !== undefined) {
                 const movie = await getMovie(movieId.toString());
                 setMovie(movie);
@@ -37,7 +38,7 @@ function ShowMovie() {
         if (movie.title === 'Loading...') {
             fetchMovie();
         }
-    });
+    },[movieId, movie.title]);
     
     const linkUserToMovie = () => {
         const authUser = auth.currentUser;
@@ -68,7 +69,7 @@ function ShowMovie() {
                 <h1> {movie.title}</h1>
                 <p>Year: {movie.year}</p>
                 <p>Actors: {movie.actors?.join(", ")}</p>
-                <GenresAndDirectorsButtons movieId={movieId} />
+                <GenresAndDirectorsButtons movieId={movieId} /> 
                 <p>Plot: {movie.plot}</p>
                 <img src={movie.posterUrl} alt=''/> 
                 <br />
