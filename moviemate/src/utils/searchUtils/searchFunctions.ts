@@ -9,33 +9,34 @@ import { count } from "console";
 // these functions return lists of movies or users sorted by spesific parameters. F.eks get movies with genre 
 
 // general search functions, all return arrays of movie Structs
-async function getMovieByGenreAnd(genreArray: string[]){
+async function getMovieByGenreAnd(genreArray: string[]) {
     // todo: error handeling
     var returnArray: Array<Movie>;
     returnArray = [];
     const q = query(collection(db, 'movies'), where('genres', 'array-contains', genreArray));
-    
+
     const document = await getDocs(q);
     document.docs.forEach((doc) => {
-        const movie: Movie = {actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl};
+        const movie: Movie = { actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl };
         returnArray.push(movie);
-        
+
     });
     return returnArray;
 }
-export async function getMovieByGenreOr(genreArray: string[]){
+export async function getMovieByGenreOr(genreArray: string[]) {
     // todo: error handeling
     var returnArray: Array<Movie>;
     returnArray = [];
     const q = query(collection(db, 'movies'), where('genres', 'array-contains-any', genreArray));
-    
+
     const document = await getDocs(q);
     document.docs.forEach((doc) => {
-        const movie: Movie = {actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl};
+        const movie: Movie = { actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl };
         returnArray.push(movie);
     });
     return returnArray;
 }
+//export async function getMovieByLengthLess(length: number) {
 // export async function getMovieByLengthLess(length: number){
 //     //todo: search movie by length in minutes?
 //     // todo: add movielength to db 
@@ -74,53 +75,53 @@ export async function getByLength(length: number, operator: string){
     const q = query(collection(db, 'movies'), where('length', operator as WhereFilterOp, length));
     const document = await getDocs(q);
     document.docs.forEach((doc) => {
-        const movie: Movie = {actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl};
+        const movie: Movie = { actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl };
         returnArray.push(movie);
-        
+
     });
     return returnArray;
 }
-export async function getMovieByLengthGreat(length: number){
+export async function getMovieByLengthGreat(length: number) {
     //todo: search movie by length in minutes?
     // todo: add movielength to db 
     var returnArray: Array<Movie>;
     returnArray = [];
     const q = query(collection(db, 'movies'), where('length', '>=', length));
-    
+
     const document = await getDocs(q);
     document.docs.forEach((doc) => {
-        const movie: Movie = {actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl};
+        const movie: Movie = { actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl };
         returnArray.push(movie);
-        
+
     });
     return returnArray;
 }
-export async function getMovieByDirectorStrict(directorArray: [String]){
+export async function getMovieByDirectorStrict(directorArray: [String]) {
     // todo: gets all movies made by these directors by logical and
     var returnArray: Array<Movie>;
     returnArray = [];
     const q = query(collection(db, 'movies'), where('directors', 'array-contains', directorArray));
-    
+
     const document = await getDocs(q);
     document.docs.forEach((doc) => {
-        const movie: Movie = {actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl};
+        const movie: Movie = { actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl };
         returnArray.push(movie);
-        
+
     });
     return returnArray;
 }
-async function getMovieByDirectorOr(directorArray: string[]){
+export async function getMovieByDirectorSoft(directorArray: string[]) {
     // todo: gets all movies made by these directors by logical or
     var returnArray: Array<Movie>;
     returnArray = [];
     
     const q = query(collection(db, 'movies'), where('genres', 'array-contains-any', directorArray));
-    
+
     const document = await getDocs(q);
     document.docs.forEach((doc) => {
-        const movie: Movie = {actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl};
+        const movie: Movie = { actors: doc.data().actors, id: doc.id, title: doc.data().title, genres: doc.data().genres, director: doc.data().directors, posterUrl: doc.data().posterUrl };
         returnArray.push(movie);
-        
+
     });
     return returnArray;
 }
@@ -130,7 +131,7 @@ export async function getMovieByDirector(name:string, movieArray?: Array<Movie>)
     directorArray = [];
     var returnArray: Array<Movie>
     returnArray = [];
-    directorArray = name.split(',')
+    directorArray = name
 
     if(typeof(movieArray) !== 'undefined'){  
         for (let index = 0; index < movieArray.length; index++) {
@@ -146,19 +147,19 @@ export async function getMovieByDirector(name:string, movieArray?: Array<Movie>)
         for (let index = 0; index < directorArray.length; index++) {
             directorArray[index].trim();        
         }
-        return getMovieByDirectorOr(directorArray)
+        return getMovieByDirectorSoft(directorArray)
     }
 }
 // functions sorting arrays of movie interfaces and returning the sorted array. Taking in an array as every non backend function retuns an array
-export function sortAlphabetical(movieArray: [Movie], reverse: boolean){
+export function sortAlphabetical(movieArray: [Movie], reverse: boolean) {
     // takes in an array of Movie interfaces and returns the array sorted by name alphabetically, or alphabetically in reverse depending on boolean
-    if(reverse){
+    if (reverse) {
         return movieArray.sort((a, b) => a.title.localeCompare(b.title)).reverse()
 
     }
     return movieArray.sort((a, b) => a.title.localeCompare(b.title))
 
-    
+
 }
 
 // deperciated until average rating is stored in movie entity in database.
