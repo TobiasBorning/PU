@@ -5,6 +5,8 @@ import { auth } from '../../config/firebase';
 import '../../components/Scrolling/ScrollingComponent.css';
 import './Profile.css'
 import { NavBar } from '../../components/Navbar/NavBar';
+import { Movie, getMovie } from '../../utils/movieUtils/fetchAndFillDb';
+import { getFavoriteDirectors, getFavoriteGenres } from '../../utils/favorite/favorite';
 
 
 
@@ -13,6 +15,9 @@ const Profile: React.FC = () => {
     const [lastName, setLastName] = useState<string>('');
     const [Email, setEmail] = useState<string>('');
     const [userInformation, setUserInformation] = useState<boolean>();
+    const [favouriteDirector, setFavouriteDirector] = useState<string>('');
+    const [favouriteGenre, setFavouriteGenre] = useState<string>('')
+    
 
     useEffect(() => {
         if (auth.currentUser) {
@@ -56,6 +61,8 @@ const Profile: React.FC = () => {
                             </>
                         )}
                     </div>
+                    <h3>{firstName}'s favourite genres:  </h3>
+                    <h3>{firstName}'s favourte directors: </h3> 
                     <h3>Your saved movies</h3>
                 </div>
                 {auth.currentUser ? <ScrollingComponent containerType="userList" uid={auth.currentUser.uid} /> : <p>Cant find user</p>}

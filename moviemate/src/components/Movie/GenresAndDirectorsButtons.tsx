@@ -26,7 +26,7 @@ const GenresAndDirectorsButtons: React.FC<Props> = ({ movieId }) => {
         if (movie && movie.director) {
             setDirectors(movie.director.map((director) => {
                 return (
-                    <HoverButton text={director}/>
+                    <HoverButton text={director} type="director"/>
                 );
             }));
         }       
@@ -36,7 +36,7 @@ const GenresAndDirectorsButtons: React.FC<Props> = ({ movieId }) => {
         if (movie && movie.genres) {
             setGenres(movie.genres.map((genres) => {
                 return (
-                    <HoverButton text={genres}/>
+                    <HoverButton text={genres} type="genre"/>
                 );
             }));
         }
