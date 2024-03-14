@@ -103,6 +103,7 @@ export const unfavoriteGenre = (uid: string, genreName: string) => {
                     favoriteGenres.splice(index, 1);
                 }
                 setDoc(userDocRef, { favoriteGenres }, { merge: true });
+                console.log("unfavorited "+ genreName)
             }
         } else {
             throw new Error("No such document!");

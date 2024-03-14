@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './HoverButton.css'; // Import CSS file for styling
-import { favoriteDirector, favoriteGenre, isFavoriteDirector, isFavoriteGenre } from '../../utils/favorite/favorite';
+import { favoriteDirector, favoriteGenre, isFavoriteDirector, isFavoriteGenre, unfavoriteDirector, unfavoriteGenre } from '../../utils/favorite/favorite';
 import { auth } from '../../config/firebase';
 
 type Props = {
@@ -26,8 +26,7 @@ const HoverButton: React.FC<Props> = ({text, type}) =>{
         })
       }
     }
-  
-  });
+  },[auth]);
   //TODO: Add functionality to add to favourites to database
   //TODO: Add functionality to mark allready favorited directors or genres. Needs util funciton
   const setFavorite = () => {
@@ -44,11 +43,27 @@ const HoverButton: React.FC<Props> = ({text, type}) =>{
     }    
   }
 
+  const setUnFavorite = () => {
+    const user = auth.currentUser
+    if (user && text) {
+      if (type === 'genre') {
+        unfavoriteGenre(user.uid, text)
+        console.log('removed favorite genre')
+        setIsFavorite(false);
+      }
+      else if (type === 'director'){
+        unfavoriteDirector(user.uid, text)
+        console.log('removed favorite director')
+        setIsFavorite(false);
+      }
+    }
+  }
+
   return (
     <button
       className="genreOrDirectorButton"
       onMouseEnter={() => setIsHovered(true)}
-      onClick={() => setFavorite()}
+      onClick={() => (isFavorite ? setUnFavorite() : setFavorite())}
       onMouseLeave={() => setIsHovered(false)}
       style={{backgroundColor: isFavorite ? 'green' : 'white'}}
     >
