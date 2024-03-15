@@ -14,7 +14,7 @@
 }
 
 .box {
-    margin: 10px 0;
+    margin: 0px 0;
     padding: 12.5px;
     border-radius: 10px;
     background-color: #373737;
@@ -44,9 +44,4 @@
     border: transparent 5px solid;
     border-radius: 15px;
     filter: sepia(80%);
-}
-
-#load {
-    margin: 0;
-    margin-bottom: 20px;
 }

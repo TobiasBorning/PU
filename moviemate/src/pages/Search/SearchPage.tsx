@@ -8,17 +8,45 @@ import './SearchPage.css';
 import { Movie, getMovieByDirectorSoft, getMovieByName } from "../../utils/searchUtils/searchFunctions";
 
 
-export{}
 const SearchPage: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [userName, setUserName] = useState<string>('');
-    // const [isSearchActive, setIsSearchActive] = useState(false);
-    // const toggleSearch = () => {
-    //     setIsSearchActive(current => !current);
-    // }
+    const [selectedGenres, setSelectedGenres] = useState<Set<string>>(new Set());
+    const [updateTrigger, setUpdateTrigger] = useState<number>(0);
     const navigate = useNavigate();
     const [searchText, setSearchText] = useState<string>('');
     const [movieList, setMovieList] = useState<Movie[]>([]);
+    const [isFiltered, setIsFiltered] = useState<boolean>(false);
+    const [showFilters, setShowFilters] = useState<boolean>(false);
+    const toggleFilters = () => setShowFilters(!showFilters);
+
+    const genres = [
+        'Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Drama', 'Family', 'Fantasy', 'Romance', 'Thriller'
+    ];
+
+    const handleFilterClick = () => {
+        if (selectedGenres.size > 0) {
+            setIsFiltered(true); 
+            setUpdateTrigger(prev => prev + 1);
+            setShowFilters(false);
+        } else {
+            setIsFiltered(false); // Ingen sjangre er valgt, vis alle filmer
+            setUpdateTrigger(prev => prev + 1);
+            setShowFilters(false);
+        }
+    };
+
+    const handleGenreChange = (genre: string) => {
+        setSelectedGenres((prevSelectedGenres) => {
+            const newSelection = new Set(prevSelectedGenres);
+            if (newSelection.has(genre)) {
+                newSelection.delete(genre);
+            } else {
+                newSelection.add(genre);
+            }
+            return newSelection;
+        });
+    };
 
     const getName = async () => {
         console.log('Getting name');
@@ -28,7 +56,7 @@ const SearchPage: React.FC = () => {
                 setUserName(', ' + user.firstname);
             });
         }
-    }
+    };
 
 
     useEffect(() => {
@@ -65,18 +93,61 @@ const SearchPage: React.FC = () => {
     return (
         <div className="searchPageContainer">
             <NavBar />
-            <input 
-                type="text"
-                className="searchInput"
-                placeholder="Search movies..."
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
+            <div className="search-and-filter-container">
+                <div>
+                    <h3>Search Title or Director</h3>
+                    <input type="text" className="searchInput" placeholder="Search..." />
+                </div>
+                <div className="dropdown">
+                    <div className="filter-header" onClick={toggleFilters}>
+                        Filter Genres ▼
+                    </div>
+                    {showFilters && (
+                        <div className="dropdown-content">
+                            <div className="genre-container">
+                                <div>
+                                    {genres.slice(0, 5).map((genre) => (
+                                        <label key={genre} className="genre-label">
+                                            <input
+                                                type="checkbox"
+                                                checked={selectedGenres.has(genre)}
+                                                onChange={() => handleGenreChange(genre)}
+                                            />
+                                            {genre}
+                                        </label>
+                                    ))}
+                                </div>
+                                <div>
+                                    {genres.slice(5).map((genre) => (
+                                        <label key={genre} className="genre-label">
+                                            <input
+                                                type="checkbox"
+                                                checked={selectedGenres.has(genre)}
+                                                onChange={() => handleGenreChange(genre)}
+                                            />
+                                            {genre}
+                                        </label>
+                                    ))}
+                                </div>
+                            </div>
+                            <button id="leftCentered" onClick={() => {
+                                handleFilterClick();
+                                toggleFilters();
+                            }}>Filter</button>
+                        </div>
+                    )}
+                </div>
+            </div>
+            <ScrollingComponent
+                containerType={isFiltered && selectedGenres.size > 0 ? "genre" : "default"}
+                selectedGenres={Array.from(selectedGenres)}
+                updateTrigger={updateTrigger}
             />
-            <ScrollingComponent containerType="default" searchQuery={searchText} /> {/* Send søkestrengen til ScrollingComponent */}
         </div>
     );
-}
+};
 
 export default SearchPage;
+
 
 
