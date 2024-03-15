@@ -10,11 +10,11 @@ import { getMovieByName } from '../../utils/searchUtils/searchFunctions';
 type Props = {
     containerType: string;
     uid?: string;
-   searchQuery?: string; // Legg til søkestrengen som et valgfritt props
-
+    searchQuery?: Movie[];
     selectedGenres?: string[];
-    updateTrigger?: number; // Bruker nå updateTrigger som er en teller
+    updateTrigger?: number;
 };
+
 
 
 const ScrollingComponent: React.FC<Props> = (props) => {
@@ -22,6 +22,7 @@ const ScrollingComponent: React.FC<Props> = (props) => {
     const [movieList, setMovieList] = useState<Movie[]>([]);
     const [boxArray, setBoxArray] = useState<JSX.Element[]>([]);
     const [movieCount, setMovieCount] = useState<number>(20);
+    console.log("Container type:", props.containerType);
 
 
     // henter filmer fra databasen
@@ -37,14 +38,10 @@ const ScrollingComponent: React.FC<Props> = (props) => {
         }
     }, [props.searchQuery]);
 
-    const searchMovies = (query: string) => {
-        // Implementer søkefunksjonalitet basert på tittel eller regissør
-        getMovieByName(query).then((movies: Movie[]) => {
-            setMovieList(movies);
-            fillContainer();
-        }).catch((error) => {
-            console.error('Error searching movies:', error);
-        });
+
+    const searchMovies = (query: Movie[]) => {
+        setMovieList(query);
+        fillContainer();
     }
 
     // fyller container med filmer når filmene er hentet
@@ -138,8 +135,6 @@ const ScrollingComponent: React.FC<Props> = (props) => {
     };
 
 
-    // øker filmer med 20
-    // TODO: oppdaterer ikke før 2 klikk
     const increaseMovieCount = () => {
         setMovieCount(movieCount + 20);
         console.log(movieCount);
