@@ -3,9 +3,11 @@ import { Movie } from "../common/interfaces";
 import { getUser } from "./users";
 import { db } from "../../config/firebase";
 
-export const simpleRecomendation = async (uid : string): Promise<Movie> => {
+export const simpleRecomendation = async (uid: string): Promise<Movie> => {
     const user = await getUser(uid)
-    if (user.favoriteDirectors && user.favoriteGenres) {
+    // If user has both genres and directors
+    if (user.favoriteDirectors && user.favoriteGenres && user.favoriteGenres.length > 0 && user.favoriteDirectors.length > 0) {
+        console.log("1")
         const randomInt = Math.floor(Math.random() * 2);
         if (randomInt === 0) {
             const randomDirectorIndex = Math.floor(Math.random() * user.favoriteDirectors.length);
@@ -18,16 +20,22 @@ export const simpleRecomendation = async (uid : string): Promise<Movie> => {
             return await getMovieRandomGenre(randomGenre);
         }
     }
-    if (user.favoriteDirectors) {
+    // User has only directors
+    if (user.favoriteDirectors && user.favoriteDirectors.length > 0) {
+        console.log("2")
         const randomDirectorIndex = Math.floor(Math.random() * user.favoriteDirectors.length);
         const randomDirector = user.favoriteDirectors[randomDirectorIndex];
         return await getMovieRandomDirector(randomDirector);
     }
-    if (user.favoriteGenres) {
+    // user has only genres
+    if (user.favoriteGenres && user.favoriteGenres.length > 0) {
+        console.log("3")
         const randomGenreIndex = Math.floor(Math.random() * user.favoriteGenres.length);
         const randomGenre = user.favoriteGenres[randomGenreIndex];
         return await getMovieRandomGenre(randomGenre);
     }
+    // user has none of the above
+    console.log("4")
     return await getRandomMovie();
 }
 
@@ -54,6 +62,7 @@ const getMovieRandomGenre = async (genre: string): Promise<Movie> => {
 }
 
 const getRandomMovie = async (): Promise<Movie> => {
+    console.log("random movie")
     const movies: Movie[] = [];
     const q = query(collection(db, 'movies'));
     const querySnapshot = await getDocs(q);

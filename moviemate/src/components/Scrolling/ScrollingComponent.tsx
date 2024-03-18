@@ -5,7 +5,7 @@ import { getMovies, Movie } from '../../utils/movieUtils/fetchAndFillDb';
 import { getUserMovies } from '../../utils/user/users';
 import { getMovieByGenreOr } from '../../utils/searchUtils/searchFunctions';
 import { getMovieByName } from '../../utils/searchUtils/searchFunctions';
-
+import { simpleRecomendation } from '../../utils/user/recomendation';
 
 type Props = {
     containerType: string;
@@ -13,7 +13,7 @@ type Props = {
     searchQuery?: Movie[];
     selectedGenres?: string[];
     updateTrigger?: number;
-    favoriteGenres?: string[];
+    // favoriteGenres?: string[];
 };
 
 
@@ -46,15 +46,13 @@ const ScrollingComponent: React.FC<Props> = (props) => {
     }
 
     const fillRandomMovieFromFavoriteGenres = async () => {
-        if (props.favoriteGenres && props.favoriteGenres.length > 0) {
-            const randomGenre = props.favoriteGenres[Math.floor(Math.random() * props.favoriteGenres.length)];
-            const moviesByGenre = await getMovieByGenreOr([randomGenre]);
-            if (moviesByGenre.length > 0) {
-                const randomMovie = moviesByGenre[Math.floor(Math.random() * moviesByGenre.length)];
-                setMovieList([randomMovie]); // Oppdaterer movieList med den tilfeldig valgte filmen
-                fillContainer(); // Oppdaterer visningen for å vise den valgte filmen
-            }
+        const movieList: Movie[] = []
+        if (props.uid) {
+            const movie = await simpleRecomendation(props.uid);
+            movieList.push(movie as Movie)
+            setMovieList(movieList)
         }
+        fillContainer();
     };
 
 
@@ -67,10 +65,6 @@ const ScrollingComponent: React.FC<Props> = (props) => {
     useEffect(() => {
         chooseFill();
     }, [props.updateTrigger]);
-
-    useEffect(() => {
-        chooseFill();
-    }, [props.favoriteGenres]);
 
 
     // navigerer til en filmside
