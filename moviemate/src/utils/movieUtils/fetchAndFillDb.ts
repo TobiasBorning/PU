@@ -1,6 +1,8 @@
 import { db } from '../../config/firebase';
 import { collection, query, limit, doc, getDoc, setDoc, getDocs } from 'firebase/firestore';
 import data from './db.json';
+import { URLSearchParams } from 'url';
+import { useState } from 'react';
 
 export interface Movie {
     id?: string;
@@ -9,6 +11,7 @@ export interface Movie {
     actors?: string[];
     genres?: string[];
     posterUrl?: string;
+    trailerUrl?: string; // adding the Trailer field to the Movie interface
     director?: string[];
     plot?: string;
     trailerUrl?: string;
@@ -29,6 +32,7 @@ export const convertToMovies = () => {
             actors: parseActors(movie.actors),
             genres: parseGenres(movie.genres),
             posterUrl: movie.posterUrl,
+            trailerUrl: movie.trailerUrl,
             director: parseDirector(movie.director),
             plot: movie.plot
         }
@@ -58,9 +62,11 @@ const parseYear = (year: string): number => {
 }
 const parseId = (id: number): string => {
     return id.toString();
-}
 
-const fillDbWithMovies = async (movies: Movie[]) => {
+    
+  };
+
+export const fillDbWithMovies = async (movies: Movie[]) => {
     movies.forEach(async (movie) => {
         if (movie.id != null) {
             try {
@@ -71,6 +77,7 @@ const fillDbWithMovies = async (movies: Movie[]) => {
                     actors: movie.actors,
                     genres: movie.genres,
                     posterUrl: movie.posterUrl,
+                    trailerUrl: movie.trailerUrl,
                     director: movie.director,
                     plot: movie.plot
                 });
@@ -94,6 +101,7 @@ export const getMovie = async (id: string): Promise<Movie> => {
                 actors: data.actors,
                 genres: data.genres,
                 posterUrl: data.posterUrl,
+                trailerUrl: data.trailerUrl,
                 director: data.director,
                 plot: data.plot
             }
@@ -117,6 +125,7 @@ export const getMovies = async (movieCount: number): Promise<Movie[]> => {
             actors: data.actors,
             genres: data.genres,
             posterUrl: data.posterUrl,
+            trailerUrl: data.trailerUrl,
             director: data.director,
             plot: data.plot
         }
