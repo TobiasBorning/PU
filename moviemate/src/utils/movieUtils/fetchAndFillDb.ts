@@ -12,7 +12,6 @@ export interface Movie {
     trailerUrl?: string; // adding the Trailer field to the Movie interface
     director?: string[];
     plot?: string;
-
 }
 
 export const testFetchJson = () => {

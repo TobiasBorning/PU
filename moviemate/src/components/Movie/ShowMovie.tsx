@@ -6,6 +6,7 @@ import { auth } from '../../config/firebase';
 import { addMovieToUser, isInMyMovies, removeMovieFromUser } from '../../utils/user/users'
 import YouTube from 'react-youtube';
 import ReviewMovie from './ReviewMovie';
+import GenresAndDirectorsButtons from './GenresAndDirectorsButtons';
 
 function ShowMovie() {
     const location = useLocation();
@@ -20,6 +21,7 @@ function ShowMovie() {
 
     useEffect(() => {
         const fetchMovie = async () => {
+            console.log("Fetching movie")
             if (movieId !== undefined) {
                 const movie = await getMovie(movieId.toString());
                 setMovie(movie);
@@ -45,9 +47,11 @@ function ShowMovie() {
                 })
             }
         };
-        fetchMovie();
-    }, [movieId]);
-
+        if (movie.title === 'Loading...') {
+            fetchMovie();
+        }
+    },[movieId, movie.title]);
+    
     const linkUserToMovie = () => {
         const authUser = auth.currentUser;
         if (authUser && movie.id) {
@@ -77,9 +81,8 @@ function ShowMovie() {
             <div className='movieInfo'>
                 <h1> {movie.title}</h1>
                 <p>Year: {movie.year}</p>
-                <p>Genres: {movie.genres?.join(", ")}</p>
                 <p>Actors: {movie.actors?.join(", ")}</p>
-                <p>Director: {movie.director}</p>
+                <GenresAndDirectorsButtons movieId={movieId} /> 
                 <p>Plot: {movie.plot}</p>
                 <img src={movie.posterUrl} alt='' />
                 <br />
