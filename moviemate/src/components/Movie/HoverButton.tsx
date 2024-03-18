@@ -77,7 +77,7 @@ const HoverButton: React.FC<Props> = ({text, type}) =>{
       onMouseLeave={() => setIsHovered(false)}
       style={{backgroundColor: isFavorite ? '#e4b036' : 'white'}}
     >
-      {isHovered ? (isFavorite ? 'Ufavorite' : 'Favorite') : text}
+      {isHovered ? (isFavorite ? 'Unfavorite' : 'Favorite') : text}
     </button>
   );
 }
