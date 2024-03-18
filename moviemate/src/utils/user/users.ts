@@ -7,6 +7,8 @@ export interface User {
     email: string;
     firstname: string;
     lastname: string;
+    favoriteGenres?: string[];
+    favoriteDirectors?: string[];
 }
 
 export function getUser(uid: string): Promise<User> {
