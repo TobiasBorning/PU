@@ -89,4 +89,5 @@ input[type='checkbox'] {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    min-width: 992px;
 }
