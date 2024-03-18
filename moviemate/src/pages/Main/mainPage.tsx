@@ -10,6 +10,7 @@ import Carousel from "../../components/Carousel/Carousel";
 const MainPage: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [userName, setUserName] = useState<string>('');
+    const [showRecommendations, setShowRecommendations] = useState<boolean>(false);
     const navigate = useNavigate();
 
     const getName = async () => {
@@ -33,6 +34,10 @@ const MainPage: React.FC = () => {
         }
     });
 
+    const handleGetRecommendationClick = () => {
+        setShowRecommendations(!showRecommendations);
+    };
+
     return (
         <div className="mainPageContainer">
             {isLoading ? <h1 className="welcomeText">Loading...</h1> :
@@ -42,6 +47,15 @@ const MainPage: React.FC = () => {
                         <h1>Hey{userName}</h1>
                         <p>Welcome to Moviemate</p>
                     </div>
+                    <button id="leftCentered" onClick={handleGetRecommendationClick}>
+                            {showRecommendations ? 'Hide Recommendation' : 'Get Recommendation'}
+                        </button>
+                        {showRecommendations && (
+                            <>
+                                <h3>Recommended for you</h3>
+                                <ScrollingComponent containerType="randomFavoriteGenre" favoriteGenres={['Action', 'Comedy']} />
+                            </>
+                        )}
                     <h2>Comedy</h2>
                     <Carousel movieLimit={10} genre="Comedy" />
                     <h2>Action</h2>
