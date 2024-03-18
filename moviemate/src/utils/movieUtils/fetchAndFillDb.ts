@@ -1,8 +1,6 @@
 import { db } from '../../config/firebase';
 import { collection, query, limit, doc, getDoc, setDoc, getDocs } from 'firebase/firestore';
 import data from './db.json';
-import { URLSearchParams } from 'url';
-import { useState } from 'react';
 
 export interface Movie {
     id?: string;
@@ -14,7 +12,6 @@ export interface Movie {
     trailerUrl?: string; // adding the Trailer field to the Movie interface
     director?: string[];
     plot?: string;
-    trailerUrl?: string;
 
 }
 
