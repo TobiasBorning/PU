@@ -2,7 +2,7 @@ import ShowMovie from '../../components/Movie/ShowMovie';
 import { NavBar } from '../../components/Navbar/NavBar';
 import React from 'react';
 
-const Movie: React.FC = () => {
+const MovieP: React.FC = () => {
     return (
         <div>
             <NavBar/>
@@ -11,4 +11,4 @@ const Movie: React.FC = () => {
     );
 }
 
-export default Movie;
+export default MovieP;
