@@ -5,7 +5,7 @@ import { User, getUser } from '../../utils/user/users';
 import { NavBar } from "../../components/Navbar/NavBar";
 import { useNavigate } from 'react-router-dom';
 import './SearchPage.css';
-import { getMovieByDirectorSoft, getMovieByName } from "../../utils/searchUtils/searchFunctions";
+import { getByNameOrDirector, getMovieByDirectorSoft, getMovieByName } from "../../utils/searchUtils/searchFunctions";
 import { Movie } from "../../utils/common/interfaces";
 
 
@@ -76,16 +76,17 @@ const SearchPage: React.FC = () => {
         const performSearch = async () => {
             if (searchText.trim() !== '') {
                 try {
-                    const [moviesByName, moviesByDirector] = await Promise.all([
-                        getMovieByName(searchText),
-                        getMovieByDirectorSoft([searchText]), 
-                    ]);
-                    console.log("Filmer etter navn:", moviesByName);
-                    console.log("Filmer etter regissør:", moviesByDirector);
+                    // const [moviesByName, moviesByDirector] = await Promise.all([
+                    //     getMovieByName(searchText),
+                    //     getMovieByDirectorSoft([searchText]), 
+                    // ]);
+                    var searchResult = await getByNameOrDirector(searchText);
+                    // console.log("Filmer etter navn:", moviesByName);
+                    // console.log("Filmer etter regissør:", directorCall);
 
-                    const combinedMovies = Array.from(new Map([...moviesByName, ...moviesByDirector].map(movie => [movie.id, movie])).values());
-                    console.log("Kombinerte og unike filmer:", combinedMovies);
-                    setMovieList(combinedMovies);
+                    // const combinedMovies = Array.from(new Map([...moviesByName, ...moviesByDirector].map(movie => [movie.id, movie])).values());
+                    // console.log("Kombinerte og unike filmer:", nameCall);
+                    setMovieList(searchResult);
                 } catch (error) {
                     console.error('Error searching movies:', error);
                 }

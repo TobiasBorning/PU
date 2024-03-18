@@ -258,3 +258,45 @@ export async function getMovieByDirector(name: string[], movieArray?: Array<Movi
             return returnArray;
         }
     }
+    export async function getByNameOrDirector(name: string){
+        var returnArray: Array<Movie> = [];
+        const nameRegex = new RegExp(name, 'i');
+        const q = collection(db, 'movies');
+            const documents = await getDocs(q);
+            documents.docs.forEach((doc) => {
+                if (doc.data().title.match(nameRegex)) { 
+                    const movie: Movie = {
+                        actors: doc.data().actors,
+                        posterUrl: doc.data().posterUrl,
+                        id: doc.id, 
+                        title: doc.data().title,
+                        genres: doc.data().genres,
+                        director: doc.data().director,
+                        year: doc.data().year,
+                        trailerUrl: doc.data().trailerUrl
+                    };
+                    returnArray.push(movie);
+                }
+            });
+            documents.docs.forEach((doc) => {
+                for (let index = 0; index < doc.data().director.length; index++) {
+                    if (doc.data().director[index].match(nameRegex)) {
+                        const movie: Movie = {
+                            actors: doc.data().actors,
+                            posterUrl: doc.data().posterUrl,
+                            id: doc.id, 
+                            title: doc.data().title,
+                            genres: doc.data().genres,
+                            director: doc.data().director,
+                            year: doc.data().year,
+                            trailerUrl: doc.data().trailerUrl
+                        };
+                        returnArray.push(movie);
+
+                    }
+                    
+                }
+            });
+            return returnArray;
+        }
+    
