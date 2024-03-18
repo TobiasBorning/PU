@@ -1,5 +1,6 @@
 .genresAndDirectorsContainer {
     max-width: 1000px;
+    margin-top: 40px;
 }
 
 .noInfoButton {
@@ -13,4 +14,4 @@
     background-color: #fff;
     color: #000;
     cursor: auto;
-}   
+}

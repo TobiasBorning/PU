@@ -60,13 +60,14 @@ const UserInfo: React.FC<UserInfoProps> = ({ uid }) => {
 
     return (
         <div>
-            <p>Hello, {firstName} {lastName}</p>
+            <h3>Hello, {firstName} {lastName}</h3>
             <p>Email: {Email}</p>
             <div className='genresAndDirectorsContainer'>
                 <p>Your favourite genres:</p>
                 {userGenres}
                 <p>Your favourite directors:</p>
                 {userDirectors}
+                <p>Your favourite movies:</p>
             </div>
             
         </div>
