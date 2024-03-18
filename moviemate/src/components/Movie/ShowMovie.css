@@ -9,6 +9,7 @@
 .container {
     background-color: #373737;
     margin-top: 100px;
+    width: 650px;
 }
 
 .movieInfo button {
@@ -31,4 +32,13 @@
 
 input[type=radio] {
     display: none;
+}
+
+#backButton {
+    margin: 0;
+    padding: 8px;
+    color: #ffc107;
+    background-color: transparent;
+    font-size: 15px;
+    border: none;
 }

@@ -67,7 +67,6 @@ const UserInfo: React.FC<UserInfoProps> = ({ uid }) => {
                 {userGenres}
                 <p>Your favourite directors:</p>
                 {userDirectors}
-                <p>Your favourite movies:</p>
             </div>
             
         </div>

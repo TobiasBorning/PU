@@ -12,34 +12,33 @@ const GenresAndDirectorsButtons: React.FC<Props> = ({ movieId }) => {
     const [genres, setGenres] = useState<JSX.Element[]>([]);
 
     useEffect(() => {
-        // Your code here
         const fetchMovie = async () => {
             console.log("Making buttons")
             getMovie(movieId.toString()).then((movie) => {
                 makeDirectorButtons(movie);
                 makeGenreButtons(movie);
             });
-            
+
         }
         fetchMovie();
-    },[movieId]);
+    }, [movieId]);
 
 
-    const makeDirectorButtons = (movie : Movie) => {
+    const makeDirectorButtons = (movie: Movie) => {
         if (movie && movie.director) {
             setDirectors(movie.director.map((director) => {
                 return (
-                    <HoverButton text={director} type="director"/>
+                    <HoverButton text={director} type="director" />
                 );
             }));
-        }       
+        }
     }
 
-    const makeGenreButtons = (movie : Movie) => {
+    const makeGenreButtons = (movie: Movie) => {
         if (movie && movie.genres) {
             setGenres(movie.genres.map((genres) => {
                 return (
-                    <HoverButton text={genres} type="genre"/>
+                    <HoverButton text={genres} type="genre" />
                 );
             }));
         }
@@ -48,7 +47,7 @@ const GenresAndDirectorsButtons: React.FC<Props> = ({ movieId }) => {
 
     return (
         <div className='gnd'>
-            <p>Director</p>
+            <p>Director:</p>
             {directors}
             <p>Genres:</p>
             {genres}
