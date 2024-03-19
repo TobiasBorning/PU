@@ -6,10 +6,13 @@ import './mainPage.css';
 import { NavBar } from "../../components/Navbar/NavBar";
 import { useNavigate } from 'react-router-dom';
 import Carousel from "../../components/Carousel/Carousel";
+import { getFavoriteGenres } from "../../utils/favorite/favorite";
+import { simpleRecomendation } from "../../utils/user/recomendation";
 
 const MainPage: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [userName, setUserName] = useState<string>('');
+    const [showRecommendations, setShowRecommendations] = useState<boolean>(false);
     const navigate = useNavigate();
 
     const getName = async () => {
@@ -28,11 +31,10 @@ const MainPage: React.FC = () => {
         setIsLoading(false);
     }, [userName]);
 
-    useEffect(() => {
-        if (auth.currentUser) {
-            getName();
-        }
-    });
+
+    const handleGetRecommendationClick = () => {
+        setShowRecommendations(!showRecommendations);
+    };
 
     return (
         <div className="mainPageContainer">
@@ -43,6 +45,19 @@ const MainPage: React.FC = () => {
                         <h1>Hey{userName}</h1>
                         <p>Welcome to Moviemate</p>
                     </div>
+                    <button id="leftCentered" onClick={handleGetRecommendationClick}>
+                        {showRecommendations ? 'Hide Recommendation' : 'Get Recommendation'}
+                    </button>
+                    {showRecommendations && (
+                        <>
+                            <h3>Recommended for you</h3>
+                            {auth.currentUser ?
+                            <ScrollingComponent containerType="randomFavoriteGenre" uid={auth.currentUser.uid}/>
+                            :
+                            <p>Not logged in</p>
+                            }
+                        </>
+                    )}
                     <h2>Comedy</h2>
                     <Carousel movieLimit={10} genre="Comedy" />
                     <h2>Action</h2>
