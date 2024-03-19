@@ -48,11 +48,13 @@ const ScrollingComponent: React.FC<Props> = (props) => {
     const fillRandomMovieFromFavoriteGenres = async () => {
         const movieList: Movie[] = []
         if (props.uid) {
-            const movie = await simpleRecomendation(props.uid);
-            movieList.push(movie as Movie)
-            setMovieList(movieList)
+            const fetchedMovie = await simpleRecomendation(props.uid);
+            if (fetchedMovie) {
+                movieList.push(fetchedMovie as Movie);
+                setMovieList(movieList)
+                fillContainer();
+            }
         }
-        fillContainer();
     };
 
 

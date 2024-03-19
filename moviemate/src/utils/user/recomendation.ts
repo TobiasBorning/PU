@@ -44,7 +44,19 @@ const getMovieRandomDirector = async (director: string): Promise<Movie> => {
     const q = query(collection(db, 'movies'), where('director', '==', director));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-        movies.push(doc.data() as Movie);
+        const data = doc.data();
+        const movie: Movie = {
+            id: doc.id,
+            title: data.title,
+            year: data.year,
+            actors: data.actors,
+            genres: data.genres,
+            posterUrl: data.posterUrl,
+            trailerUrl: data.trailerUrl,
+            director: data.director,
+            plot: data.plot
+        }
+        movies.push(movie);
     });
     const randomInt = Math.floor(Math.random() * movies.length);
     return movies[randomInt];
@@ -55,7 +67,19 @@ const getMovieRandomGenre = async (genre: string): Promise<Movie> => {
     const q = query(collection(db, 'movies'), where('genres', 'array-contains', genre));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-        movies.push(doc.data() as Movie);
+        const data = doc.data();
+        const movie: Movie = {
+            id: doc.id,
+            title: data.title,
+            year: data.year,
+            actors: data.actors,
+            genres: data.genres,
+            posterUrl: data.posterUrl,
+            trailerUrl: data.trailerUrl,
+            director: data.director,
+            plot: data.plot
+        }
+        movies.push(movie);
     });
     const randomInt = Math.floor(Math.random() * movies.length);
     return movies[randomInt];
@@ -67,7 +91,19 @@ const getRandomMovie = async (): Promise<Movie> => {
     const q = query(collection(db, 'movies'));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-        movies.push(doc.data() as Movie);
+        const data = doc.data();
+        const movie: Movie = {
+            id: doc.id,
+            title: data.title,
+            year: data.year,
+            actors: data.actors,
+            genres: data.genres,
+            posterUrl: data.posterUrl,
+            trailerUrl: data.trailerUrl,
+            director: data.director,
+            plot: data.plot
+        }
+        movies.push(movie);
     });
     const randomInt = Math.floor(Math.random() * 99);
     return movies[randomInt];
