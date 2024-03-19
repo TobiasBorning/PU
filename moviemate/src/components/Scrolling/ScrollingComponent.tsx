@@ -5,7 +5,7 @@ import { getMovies, Movie } from '../../utils/movieUtils/fetchAndFillDb';
 import { getUserMovies } from '../../utils/user/users';
 import { getMovieByGenreOr } from '../../utils/searchUtils/searchFunctions';
 import { getMovieByName } from '../../utils/searchUtils/searchFunctions';
-
+import { simpleRecomendation } from '../../utils/user/recomendation';
 
 type Props = {
     containerType: string;
@@ -13,6 +13,7 @@ type Props = {
     searchQuery?: Movie[];
     selectedGenres?: string[];
     updateTrigger?: number;
+    // favoriteGenres?: string[];
 };
 
 
@@ -44,6 +45,19 @@ const ScrollingComponent: React.FC<Props> = (props) => {
         fillContainer();
     }
 
+    const fillRandomMovieFromFavoriteGenres = async () => {
+        const movieList: Movie[] = []
+        if (props.uid) {
+            const fetchedMovie = await simpleRecomendation(props.uid);
+            if (fetchedMovie) {
+                movieList.push(fetchedMovie as Movie);
+                setMovieList(movieList)
+                fillContainer();
+            }
+        }
+    };
+
+
     // fyller container med filmer når filmene er hentet
     useEffect(() => {
         fillContainer();
@@ -52,7 +66,7 @@ const ScrollingComponent: React.FC<Props> = (props) => {
     // fyller container med filmer sortert etter sjanger nå man klikekr på filter-knapp
     useEffect(() => {
         chooseFill();
-    }, [props.updateTrigger]); // Du kan legge til flere avhengigheter hvis nødvendig
+    }, [props.updateTrigger]);
 
 
     // navigerer til en filmside
@@ -131,6 +145,9 @@ const ScrollingComponent: React.FC<Props> = (props) => {
                     fillAllMovies();
                 }
                 break;
+            case "randomFavoriteGenre":
+                fillRandomMovieFromFavoriteGenres();
+                break;
         }
     };
 
@@ -147,7 +164,9 @@ const ScrollingComponent: React.FC<Props> = (props) => {
                 {boxArray}
             </div>
             <br />
-            <button id="leftCentered" onClick={increaseMovieCount}>Load more movies..</button>
+            {props.containerType !== "randomFavoriteGenre" && (
+                <button id="leftCentered" onClick={increaseMovieCount}>Load more movies..</button>
+            )}
         </div>
     );
 }

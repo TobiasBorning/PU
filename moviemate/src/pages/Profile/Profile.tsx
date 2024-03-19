@@ -19,6 +19,7 @@ const Profile: React.FC = () => {
                     </div>
                 </div>
                 {auth.currentUser ? <ScrollingComponent containerType="userList" uid={auth.currentUser.uid} /> : <p>Cant find user</p>}
+
             </div>
         </div>
     );
