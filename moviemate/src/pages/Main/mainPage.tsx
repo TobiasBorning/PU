@@ -27,6 +27,7 @@ const MainPage: React.FC = () => {
 
     useEffect(() => {
         console.log(userName);
+        getName();
         setIsLoading(false);
     }, [userName]);
 

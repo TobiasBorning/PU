@@ -164,7 +164,7 @@ const ScrollingComponent: React.FC<Props> = (props) => {
                 {boxArray}
             </div>
             <br />
-            {props.containerType !== "randomFavoriteGenre" && (
+            {props.containerType !== "randomFavoriteGenre" && props.containerType !== 'userList' &&(
                 <button id="leftCentered" onClick={increaseMovieCount}>Load more movies..</button>
             )}
         </div>

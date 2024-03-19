@@ -55,3 +55,7 @@
 .nav ul .searchInput.active {
     display: block;
 }
+
+.active {
+    text-decoration: underline !important; 
+}

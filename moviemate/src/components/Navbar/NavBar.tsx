@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import './NavBar.css';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const NavBar: React.FC = () => {
     const [isSearchActive, setIsSearchActive] = useState(false);
@@ -8,13 +8,19 @@ export const NavBar: React.FC = () => {
         setIsSearchActive(current => !current);
     }
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const isActive = (path: string): boolean => {
+        return location.pathname === path;
+    };
+    
 
     return (
         <nav className="nav">
-            <p className="site-title" onClick={() => navigate("/main")}>MovieMate</p>
+            <p className={`site-title ${isActive('/main') ? 'active' : ''}`} onClick={() => navigate("/main")}>MovieMate</p>
             <ul>
-                <p className="navBarElements" onClick={() => navigate("/profile")}>My profile</p>
-                <p className="navBarElements" onClick={() => navigate("/search")}>Advanced search</p>
+                <p className={`navBarElements ${isActive('/profile') ? 'active' : ''}`} onClick={() => navigate("/profile")}>Profile</p>
+                <p className={`navBarElements ${isActive('/search') ? 'active' : ''}`} onClick={() => navigate("/search")}>Search</p>
             </ul>
         </nav>
     );

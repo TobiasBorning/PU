@@ -30,7 +30,7 @@ function ShowMovie() {
                     isInMyMovies(authUser.uid, movie.id).then((contains) => {
                         setIsInList(contains);
                     });
-                
+
                     if (movie.trailerUrl) {
                         const urlParams = new URLSearchParams(movie.trailerUrl.split('?')[1]);
                         const videoId = urlParams.get('v');
@@ -50,8 +50,8 @@ function ShowMovie() {
         if (movie.title === 'Loading...') {
             fetchMovie();
         }
-    },[movieId, movie.title]);
-    
+    }, [movieId, movie.title]);
+
     const linkUserToMovie = () => {
         const authUser = auth.currentUser;
         if (authUser && movie.id) {
@@ -82,7 +82,7 @@ function ShowMovie() {
                 <h1> {movie.title}</h1>
                 <p>Year: {movie.year}</p>
                 <p>Actors: {movie.actors?.join(", ")}</p>
-                <GenresAndDirectorsButtons movieId={movieId} /> 
+                <GenresAndDirectorsButtons movieId={movieId} />
                 <p>Plot: {movie.plot}</p>
                 <img src={movie.posterUrl} alt='' />
                 <br />
@@ -93,8 +93,9 @@ function ShowMovie() {
                 <button onClick={() => setShowTrailer(true)}>Show Trailer</button>
                 <br />
                 {showTrailer && <YouTube videoId={trailerId} opts={{ width: '500', height: '285' }} />}
+                <br></br>
+                <button id='backButton' onClick={() => navigate(-1)}>&#10094; Go back</button>
             </div>
-            <button onClick={() => navigate('/main')}>Go back</button>
         </div>
     );
 }
