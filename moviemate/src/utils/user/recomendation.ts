@@ -41,7 +41,7 @@ export const simpleRecomendation = async (uid: string): Promise<Movie> => {
 
 const getMovieRandomDirector = async (director: string): Promise<Movie> => {
     const movies: Movie[] = [];
-    const q = query(collection(db, 'movies'), where('director', '==', director));
+    const q = query(collection(db, 'movies'), where('director', 'array-contains', director));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
         const data = doc.data();
