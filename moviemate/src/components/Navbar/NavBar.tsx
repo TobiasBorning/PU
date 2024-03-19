@@ -19,8 +19,8 @@ export const NavBar: React.FC = () => {
         <nav className="nav">
             <p className={`site-title ${isActive('/main') ? 'active' : ''}`} onClick={() => navigate("/main")}>MovieMate</p>
             <ul>
-                <p className={`navBarElements ${isActive('/profile') ? 'active' : ''}`} onClick={() => navigate("/profile")}>My profile</p>
-                <p className={`navBarElements ${isActive('/search') ? 'active' : ''}`} onClick={() => navigate("/search")}>Advanced search</p>
+                <p className={`navBarElements ${isActive('/profile') ? 'active' : ''}`} onClick={() => navigate("/profile")}>Profile</p>
+                <p className={`navBarElements ${isActive('/search') ? 'active' : ''}`} onClick={() => navigate("/search")}>Search</p>
             </ul>
         </nav>
     );
